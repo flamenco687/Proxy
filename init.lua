@@ -45,11 +45,11 @@ function Proxy.new(origin: table): table
 end
 
 --[=[
-    Kill the proxy and disconnect all connections.
+    Destroy the proxy and disconnect all connections.
 
     @return nil
 ]=]
-function Proxy:Kill()
+function Proxy:Destroy()
     self.Indexed:DisconnectAll()
     self.Changed:DisconnectAll()
 

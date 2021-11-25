@@ -2,7 +2,7 @@
 name = "flamenco687/roblox-proxy"
 description = "Roblox library to quickly throw out clean & detailed errors"
 
-version = "2.0.0"
+version = "2.0.1"
 license = "MIT License"
 
 authors = ["flamenco687"]
@@ -16,6 +16,7 @@ exclude = [
     "selene.toml",
     "foreman.toml",
     "test.project.json",
+    "CHANGELOG.md",
     "README.md",
     "LICENSE"
 ]
