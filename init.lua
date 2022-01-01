@@ -3,17 +3,17 @@ local Signal = require(script.Parent.Signal)
 --[=[
     @class Proxy
 
-    Simple class designed to work as a proxy for tables. The proxy also
-    fires signals when something new is being added to the table or in
-    case a table's value is being indexed.
+    Class designed to work as a proxy for tables. If a key is indexed, the proxy
+    will fire an indexed signal. If a key's value is changed, the proxy will
+    fire a changed signal
     ```lua
     local proxy = Proxy.new()
 
-    proxy.Changed:Connect(function(key, value)
-        print(key, value)
+    proxy.Changed:Connect(function(Key, Value)
+        print(Key, Value)
     end)
 
-    proxy.test = 10 -- This would print out: test 10
+    proxy.Test = 10 -- This will print out: Test 10
     ```
 ]=]
 local Proxy = {}
@@ -31,17 +31,18 @@ Proxy.__index = Proxy
 --[=[
     Creates a new Proxy class.
 
-    @param origin table -- The table which the proxy will be created for
+    @param Origin table -- The table for which the proxy will be created
     @return Proxy
 ]=]
-function Proxy.new(origin: table): table
-	local proxy = {
-        Proxy = origin or {},
+function Proxy.new(Origin: table, InheritProxies: boolean?): Proxy
+	local self = {
+        Proxy = Origin or {},
         Indexed = Signal.new(),
         Changed = Signal.new(),
+        InheritProxies = if InheritProxies then InheritProxies else false
     }
 
-	return setmetatable(proxy, Proxy)
+	return setmetatable(self, Proxy)
 end
 
 --[=[
@@ -49,41 +50,54 @@ end
 
     @return nil
 ]=]
-function Proxy:Destroy()
-    self.Indexed:DisconnectAll()
-    self.Changed:DisconnectAll()
+function Proxy:Destroy(): nil
+    self.Indexed:Destroy()
+    self.Changed:Destroy()
 
+    setmetatable(self, nil)
     self = nil
+
+    return nil
 end
 
 --[=[
-    Fires an internal signal when a value is indexed
+    Fires an internal signal when a Value is indexed
 
     @private
     @return any
 ]=]
-function Proxy:__index(key: string): any
-    local value = self.Proxy[key]
+function Proxy:__index(Key: string): any
+    local Value = self.Proxy[Key]
 
-    self.Indexed:Fire(key, value)
+    self.Indexed:Fire(Key, Value)
 
-	return value
+	return Value
 end
 
 --[=[
-    Fires an internal signal when a new value is indexed
+    Fires an internal signal when a new Value is indexed
 
     @private
     @return nil
 ]=]
-function Proxy:__newindex(key: string, value: any)
-	local currentValue = self.Proxy[key]
+function Proxy:__newindex(Key: string, Value: any): nil
+	local CurrentValue = self.Proxy[Key]
 
-	if currentValue ~= value then
-		self.Proxy[key] = value
+	if CurrentValue ~= Value then
+        if type(CurrentValue) == "table" and getmetatable(CurrentValue) == Proxy then
+            CurrentValue:Destroy()
+        end
+
+        if type(Value) == "table" and self.InheritProxies then
+            self.Proxy[Key] = Proxy.new(Value, true)
+        else
+            self.Proxy[Key] = Value
+        end
+
+        self.Changed:Fire(Key, Value)
 	end
-
-    self.Changed:Fire(key, value)
 end
+
+export type Proxy = typeof(Proxy.new())
 
 return Proxy

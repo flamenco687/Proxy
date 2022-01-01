@@ -1,2 +1,2 @@
 # Proxy
- Roblox library to quickly detect table modifications using signals
+ Roblox library to detect changes in vanilla tables
