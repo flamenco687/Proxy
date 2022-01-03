@@ -1,3 +1,9 @@
+## [2.1.3] - 2022-03-01
+
+### Fixed
+- Proxies didn't inherit parent's custom properties
+- `build` folder ([Moonwave](https://upliftgames.github.io/moonwave/) page) was being included inside the package installation, updated wally.toml exclude
+
 ## [2.1.2] - 2022-03-01
 
 ### Fixed

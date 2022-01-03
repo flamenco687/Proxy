@@ -132,19 +132,16 @@ function Proxy:__newindex(Key: string, Value: any): nil
 
         if type(Value) == "table" and self.InheritProxies then
 
-            local CustomProperties: table?
+            local CustomProperties: table = {}
 
-            if #self > 4 then -- If more than 4 properties are found inside the proxy, they are considered custom properties to inherit
-                CustomProperties = {}
-
-                for PropertyName, PropertyValue in pairs(self) do
-                    if not ProxyDefaultProperties[PropertyName] then
-                        CustomProperties[PropertyName] = PropertyValue
-                    end
+            for PropertyName, PropertyValue in pairs(self) do
+                if not ProxyDefaultProperties[PropertyName] then
+                    CustomProperties[PropertyName] = PropertyValue
                 end
             end
 
-            self.Proxy[Key] = Proxy.new(Value, true, if CustomProperties then CustomProperties else nil)
+            self.Proxy[Key] = Proxy.new(Value, true, CustomProperties)
+            CustomProperties = nil
         else
             self.Proxy[Key] = Value
         end
