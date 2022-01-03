@@ -1,3 +1,24 @@
+## [2.1.0] - 2021-11-25
+
+*Since this version, the Proxy project uses the default tree structure of `src/init.lua` so moonwave documentation can be generated with ease.*
+
+### Updated
+- StyLua: [0.11.2] -> [0.11.3]
+
+### Added
+- `CustomProperties: table` can now be passed as an argument when constructing proxies. It is the equivalent of manually adding custom properties to
+the proxy by using `rawset`, but passing the argument will ensure those properties are replicated to inherited proxies that are directly found in the
+proxy origin
+- Missing type annotations
+
+### Improvements
+- Completed moonwave documentation
+- Fixed some variables not using the new [if-then-else expression](https://devforum.roblox.com/t/luau-recap-october-2021/1531825)
+
+### Fixed
+- Fixed optional types being required types when constructing a proxy
+- Proxies only inherited properties when being newly added, but tables found inside the proxy origin were not converted to proxies, fixed that
+
 ## [2.0.2] - 2022-01-01
 
 *Happy new year!*

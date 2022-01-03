@@ -8,7 +8,7 @@
 
       "Proxy": {
         "$className": "ModuleScript",
-        "$path": "init"
+        "$path": "src/init"
       }
     }
   }

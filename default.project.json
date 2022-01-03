@@ -1,6 +1,6 @@
 {
   "name": "roblox-proxy",
   "tree": {
-    "$path": "init"
+    "$path": "src"
   }
 }
