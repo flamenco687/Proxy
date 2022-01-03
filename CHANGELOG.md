@@ -1,4 +1,4 @@
-## [2.1.0] - 2021-11-25
+## [2.1.0] - 2022-03-01
 
 *Since this version, the Proxy project uses the default tree structure of `src/init.lua` so moonwave documentation can be generated with ease.*
 
