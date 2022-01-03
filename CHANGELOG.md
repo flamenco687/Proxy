@@ -1,3 +1,8 @@
+## [2.1.2] - 2022-03-01
+
+### Fixed
+- Constructor attempted to check the lenght of a nil value when checking if children proxies should inherit properties
+
 ## [2.1.1] - 2022-03-01
 
 ### Fixed

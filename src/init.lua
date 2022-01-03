@@ -68,7 +68,7 @@ function Proxy.new(Origin: table?, InheritProxies: boolean?, CustomProperties: t
         end
     end
 
-    if InheritProxies and #self.Origin > 0 then
+    if InheritProxies and #self.Proxy > 0 then
         for Key, Value in pairs(self.Proxy) do
             if type(Value) == "table" then
                 self.Proxy[Key] = Proxy.new(Value, true, CustomProperties)
