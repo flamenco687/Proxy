@@ -1,3 +1,9 @@
+## [2.1.1] - 2022-03-01
+
+### Fixed
+- Fixed `.new` trying to iterate through CustomProperties even if it is nil
+- Fixed passing default proxy properties as custom properties when constructing a new proxy from `__newindex` 
+
 ## [2.1.0] - 2022-03-01
 
 *Since this version, the Proxy project uses the default tree structure of `src/init.lua` so moonwave documentation can be generated with ease.*

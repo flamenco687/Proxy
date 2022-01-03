@@ -38,6 +38,13 @@ Proxy.__index = Proxy
 --- @prop InheritProxies boolean
 --- @within Proxy
 
+local ProxyDefaultProperties = {
+    Proxy = true,
+    Indexed = true,
+    Changed = true,
+    InheritProxies = true
+}
+
 --[=[
     Creates a new Proxy class.
 
@@ -55,11 +62,13 @@ function Proxy.new(Origin: table?, InheritProxies: boolean?, CustomProperties: t
         InheritProxies = if InheritProxies then InheritProxies else false
     }
 
-    for Property, Value in pairs(CustomProperties) do
-        self[Property] = Value
+    if CustomProperties then
+        for Property, Value in pairs(CustomProperties) do
+            self[Property] = Value
+        end
     end
 
-    if InheritProxies and Origin ~= {} then
+    if InheritProxies and #self.Origin > 0 then
         for Key, Value in pairs(self.Proxy) do
             if type(Value) == "table" then
                 self.Proxy[Key] = Proxy.new(Value, true, CustomProperties)
@@ -129,7 +138,9 @@ function Proxy:__newindex(Key: string, Value: any): nil
                 CustomProperties = {}
 
                 for PropertyName, PropertyValue in pairs(self) do
-                    CustomProperties[PropertyName] = PropertyValue
+                    if not ProxyDefaultProperties[PropertyName] then
+                        CustomProperties[PropertyName] = PropertyValue
+                    end
                 end
             end
 
