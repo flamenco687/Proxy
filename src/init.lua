@@ -105,7 +105,7 @@ end
 function Proxy:__index(Key: string): any
     local Value: any = self.Proxy[Key]
 
-    self.Indexed:Fire(Key, Value)
+    self.Indexed:Fire(Key, Value, self)
 
 	return Value
 end
@@ -146,7 +146,7 @@ function Proxy:__newindex(Key: string, Value: any): nil
             self.Proxy[Key] = Value
         end
 
-        self.Changed:Fire(Key, Value)
+        self.Changed:Fire(Key, Value, self)
 	end
 end
 

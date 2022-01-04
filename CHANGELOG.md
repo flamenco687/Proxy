@@ -1,3 +1,8 @@
+## [2.1.4] - 2022-04-01
+
+### Added
+- `Indexed` & `Changed` now pass the proxy as a third argument
+
 ## [2.1.3] - 2022-03-01
 
 ### Fixed
