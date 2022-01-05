@@ -1,3 +1,27 @@
+## [3.0.0] - 2022-05-01
+
+### Added
+- `:OnChange()` in replacement of `.Changed`, directly connects the passed functions and can be disconnected by calling the returned function
+- `:OnIndex()` in replacement of `.Indexed`, directly connects the passed functions and can be disconnected by calling the returned function
+- `:Set()` and `:Get()` to interact with values inside the proxy table that are proxy properties or methods
+- Better documentation and extra functions regarding the new connections system
+
+### Removed
+- Signal dependency
+- Proxies cannot longer inherit or convert other tables in proxies by default, that implementation must be done externally now to keep it simpler
+
+### Changes
+- Overhauled most documentation
+- Changed the way change or index listeners are handled as part of the Signal removal
+- Proxy methods are stored inside a table to prevent conflicts with indexing
+
+### Improvements
+- When adding custom properties to a proxy, default proxy properties are protected and cannot be overriden. Trying to do so will throw a warning
+- Simplified the code
+
+### Fixed
+- A lot of issues, in general. The module should have near to 0 bugs
+
 ## [2.1.4] - 2022-04-01
 
 ### Added

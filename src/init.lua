@@ -1,93 +1,99 @@
-local Signal = require(script.Parent.Signal)
-
 --[=[
     @class Proxy
 
-    Class designed to work as a proxy for tables. If a key is indexed, the proxy
-    will fire an indexed signal. If a key's value is changed, the proxy will
-    fire a changed signal
+    Class designed to work as a proxy table. Functions can be connected to listen for
+    key indexing or key changes/additions
+
     ```lua
     local Proxy = Proxy.new()
 
-    Proxy.Changed:Connect(function(Key: string, Value: any)
-        print(Key, Value)
+    Proxy:OnIndex(function(Key: string, Value: any) --! Will not fire when the key changes
+        print("Indexed ->", Key, Value)
     end)
 
-    Proxy.Test = 10 -- This will print out: Test 10
+    local Disconnect = Proxy:OnChange(function(Key: string, Value: any, OldValue: any)
+        print("Changed ->", Key, Value, OldValue)
+    end)
+
+    Proxy.Test = 10 -- Output: Changed -> Test 10 nil
+
+    print(Proxy.Test) -- 1st Output: Indexed -> Test 10
+                      -- 2nd Output: 10
+
+    Disconnect() -- The connection gets disconnected by just calling it, magic!
+
+    Proxy.Test = 50 -- Nothing prints out
     ```
 ]=]
 local Proxy = {}
 Proxy.__index = Proxy
 
---- Table as a proxy. All keys added to the Proxy object are added to this table
---- @prop Proxy table
+--- Table that acts as the proxy. All keys will automatically be added or indexed from this table except if `rawset` or `rawget` are used
+--- @prop _Proxy table
 --- @within Proxy
+--- @readonly
 
---- Signal fired when a proxy's key is indexed
---- ```lua
---- local Value = if Proxy.Something then true else nil -- Indexed is fired, we got Something value
---- ```
---- @prop Indexed Signal
+--- Table of functions that fire when a proxy's key is indexed
+--- @prop _IndexedListeners Signal
 --- @within Proxy
+--- @readonly
 
---- Signal fired when a new key is added to the proxy or when a key's value changes
---- @prop Changed Signal
+--- Table of functions that fire when a key is added to the proxy or changed
+--- @prop _ChangedListeners Signal
 --- @within Proxy
+--- @readonly
 
---- Defines if tables added to the proxy should be converted to a proxy that inherits its parent proxy properties
---- @prop InheritProxies boolean
---- @within Proxy
+local function ListenToDisconnection(Callback: (any?) -> (), Source: table)
+    Source[Callback] = true
 
-local ProxyDefaultProperties = {
-    Proxy = true,
-    Indexed = true,
-    Changed = true,
-    InheritProxies = true
-}
+    local Disconnected: boolean = false
 
---[=[
-    Creates a new Proxy class.
-
-    @within Proxy
-    @param Origin? table -- Optional table to convert and use as the proxy
-    @param InheritProxies? boolean -- Should other tables added to the proxy become a proxy with same properties?
-    @param CustomProperties? table -- Custom properties that can be added on creation of the proxy and its children (equivalent of using rawset)
-    @return Proxy
-]=]
-function Proxy.new(Origin: table?, InheritProxies: boolean?, CustomProperties: table?): Proxy
-	local self = {
-        Proxy = if Origin then Origin else {},
-        Indexed = Signal.new(),
-        Changed = Signal.new(),
-        InheritProxies = if InheritProxies then InheritProxies else false
-    }
-
-    if CustomProperties then
-        for Property, Value in pairs(CustomProperties) do
-            self[Property] = Value
+    return function()
+        if Disconnected or Source == nil then
+            return
         end
-    end
 
-    if InheritProxies and #self.Proxy > 0 then
-        for Key, Value in pairs(self.Proxy) do
-            if type(Value) == "table" then
-                self.Proxy[Key] = Proxy.new(Value, true, CustomProperties)
-            end
-        end
-    end
+        Disconnected = true
 
-	return setmetatable(self, Proxy)
+        Source[Callback] = nil
+    end
 end
 
 --[=[
-    Destroys the proxy and disconnects all of its connections.
+    Connects passed callback to a signal that fires when a key is indexed
 
+    @since v3.0.0
+
+    @within Proxy
+
+    @param Callback (Key: string?, Value: any?, Proxy: Proxy?) -> ()
+    @return Connection
+]=]
+function OnIndex(self: Proxy, Callback: (Key: string?, Value: any?, Proxy: Proxy?) -> ()): RBXScriptConnection
+    return ListenToDisconnection(Callback, self._IndexedListeners)
+end
+
+--[=[
+    Connects passed callback to a signal that fires when a key is added or changed
+
+    @since v3.0.0
+
+    @within Proxy
+
+    @param Callback (Key: string?, Value: any?, OldValue: any?, Proxy: Proxy?) -> ()
+    @return Connection
+]=]
+function OnChange(self: Proxy, Callback: (Key: string?, Value: any?, OldValue: any?, Proxy: Proxy?) -> ()): RBXScriptConnection
+    return ListenToDisconnection(Callback, self._ChangedListeners)
+end
+
+--[=[
+    Destroys the proxy and disconnects all listeners
+
+    @within Proxy
     @return nil
 ]=]
-function Proxy:Destroy(): nil
-    self.Indexed:Destroy()
-    self.Changed:Destroy()
-
+function Destroy(self: Proxy): nil
     setmetatable(self, nil)
     self = nil
 
@@ -95,66 +101,160 @@ function Proxy:Destroy(): nil
 end
 
 --[=[
-    Fires `Indexed` signal when a key is indexed and returns
-    the key's value
+    Specifically looks for the desired key inside the proxy table.
+
+    :::info
+    Use this in case the proxy object has a property that is also a key inside the proxy table
+
+    @since v3.0.0
+
+    @function Get
+    @within Proxy
+
+    @param Key string
+    @return any
+]=]
+function Get(self: Proxy, Key: string): any
+    return self._Proxy[Key]
+end
+
+--[=[
+    Specifically sets the value for the desired key inside the proxy table.
+
+    :::info
+    Use this in case the proxy object has a property that is also a key inside the proxy table
+
+    @since v3.0.0
+
+    @function Set
+    @within Proxy
+
+    @param Key string
+    @param Value any
+    @return any -- Returns the value that was initially passed
+]=]
+function Set(self: Proxy, Key: string, Value: any): any
+    self._Proxy[Key] = Value
+    return Value
+end
+
+--[=[
+    Creates a new proxy object
+
+    @within Proxy
+
+    @param Origin table? -- Optional table to use as template for the proxy table
+    @param CustomProperties {[string]: any}? -- Custom properties can be added to the proxy before constructing it
+    @return Proxy
+]=]
+function Proxy.new(Origin: table?, CustomProperties: {[string]: any}?): Proxy
+	local self = {
+        _Proxy = if Origin then Origin else {},
+        _IndexedListeners = {},
+        _ChangedListeners = {},
+    }
+
+    if CustomProperties then
+        for Property, Value in pairs(CustomProperties) do
+            if self[Property] ~= nil then
+                warn("Tried to override default proxy property with custom property: "..Property..". Action was rejected")
+            else
+                self[Property] = Value
+            end
+        end
+    end
+
+    self._Methods = {
+        Destroy = Destroy,
+        OnIndex = OnIndex,
+        OnChange = OnChange,
+        Get = Get,
+        Set = Set
+    }
+
+	return setmetatable(self, Proxy)
+end
+
+--[=[
+    Fires all the listeners from the specified source along with the passed arguments
 
     @private
+    @since v3.0.0
+
+    @function FireListeners
+    @within Proxy
+
+    @param Source table
+    @param ... any
+    @return nil
+]=]
+local function FireListeners(Source: table, ...: any)
+    for Callback: (...any) -> (...any) in pairs(Source) do
+        task.spawn(Callback, ...)
+    end
+end
+
+--[=[
+    Fires index listeners and returns the key's value
+
+    :::note Class members can be indexed
+    Proxy's properties or methods can be returned when indexing them. To only get
+    or set actual values from the proxy table, use the `:Get` and `:Set` methods
+
+    @private
+    @tag Metamethod
+
     @param Key string
     @return any
 ]=]
 function Proxy:__index(Key: string): any
-    local Value: any = self.Proxy[Key]
+    if Key == "OnIndex" or Key == "OnChange" or Key == "Destroy" or Key == "Get" or Key == "Set" then
+        return self._Methods[Key] -- Methods are found inside a table and must be returned like this when indexed
+    end
 
-    self.Indexed:Fire(Key, Value, self)
+    local Value: any = self._Proxy[Key]
+
+    FireListeners(self._IndexedListeners, Key, Value, self)
 
 	return Value
 end
 
 --[=[
-    Fires `Changed` signal when a key gets modified
-    or added to the proxy. `Changed` will only fire
-    if the value differs from its last version, even
-    though `__newindex` fires in every change or key
-    addition
+    Fires change listeners. Change listeners will only fire if the updated value
+    differs from its last version
+
+    :::note Child proxies are automatically cleaned up
+    When a key's value is changed, if the old value is a proxy object, it will automatically
+    be destroyed using the `Destroy` method
 
     @private
+    @tag Metamethod
+
     @param Key string
     @param Value any
     @return nil
 ]=]
 function Proxy:__newindex(Key: string, Value: any): nil
-	local CurrentValue: any = self.Proxy[Key]
+	local CurrentValue: any = self._Proxy[Key]
 
 	if CurrentValue ~= Value then
         if type(CurrentValue) == "table" and getmetatable(CurrentValue) == Proxy then
             CurrentValue:Destroy()
         end
 
-        if type(Value) == "table" and self.InheritProxies then
+        self._Proxy[Key] = Value
 
-            local CustomProperties: table = {}
-
-            for PropertyName, PropertyValue in pairs(self) do
-                if not ProxyDefaultProperties[PropertyName] then
-                    CustomProperties[PropertyName] = PropertyValue
-                end
-            end
-
-            self.Proxy[Key] = Proxy.new(Value, true, CustomProperties)
-            CustomProperties = nil
-        else
-            self.Proxy[Key] = Value
-        end
-
-        self.Changed:Fire(Key, Value, self)
+        FireListeners(self._ChangedListeners, Key, Value, CurrentValue, self)
 	end
+
+    return nil
 end
 
+type table = {}
 --- Used to represent a table instead of typing {} since its more visual and I'm used to it
 --- @type table {}
 --- @within Proxy
-type table = {}
 
-export type Proxy = typeof(Proxy.new())
+type Proxy = typeof(Proxy.new())
 
 return Proxy
