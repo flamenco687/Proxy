@@ -43,7 +43,20 @@ Proxy.__index = Proxy
 --- @within Proxy
 --- @readonly
 
-local function ListenToDisconnection(Callback: (any?) -> (), Source: table)
+
+--[=[
+    Returns a callback function that must be called to disconnect a listeners
+
+    @since v3.0.0
+
+    @function ListenToDisconnection
+    @within Proxy
+
+    @param Callback (...any?) -> ()
+    @param Source table -- Where to store active callbacks
+    @return () -> ()
+]=]
+local function ListenToDisconnection(Callback: (...any?) -> (), Source: table): () -> ()
     Source[Callback] = true
 
     local Disconnected: boolean = false
@@ -173,6 +186,28 @@ function Proxy.new(Origin: table?, CustomProperties: {[string]: any}?): Proxy
     }
 
 	return setmetatable(self, Proxy)
+end
+
+--[=[
+    Checks if a given table is or not a proxy (checks its metatable)
+    ```lua
+    local Proxy = require(Source.Proxy)
+
+    local NewProxy = Proxy.new()
+
+    print(Proxy.IsProxy(NewProxy)) -- Output: true
+    print(Proxy.IsProxy({}))       -- Output: false
+    ```
+
+    @since v3.1.0
+
+    @within Proxy
+
+    @param Table table
+    @return boolean
+]=]
+function Proxy.IsProxy(Table: table): boolean
+    return getmetatable(Table) == Proxy
 end
 
 --[=[

@@ -1,3 +1,21 @@
+## [3.1.0] - 2022-06-01
+
+### Added
+- `IsProxy()` can now be called to check if given table is a proxy or not (function must be called by indexing it from the Proxy
+module instead of the proxy object)
+```lua
+local Proxy = require(Source.Proxy)
+
+local NewProxy = Proxy.new()
+
+print(Proxy.IsProxy(NewProxy))    -- Output: true
+print(NewProxy.IsProxy(NewProxy)) -- Errors: attempt to call a nil value
+
+print(Proxy.IsProxy({})) -- Output: false
+```
+- Missing moonwave documentation for `ListenToDisconnection()`
+- Missing type annotation
+
 ## [3.0.0] - 2022-05-01
 
 ### Added
