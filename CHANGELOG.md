@@ -1,20 +1,22 @@
 ## [3.1.0] - 2022-06-01
 
 ### Added
-- `IsProxy()` can now be called to check if given table is a proxy or not (function must be called by indexing it from the Proxy
-module instead of the proxy object)
-```lua
-local Proxy = require(Source.Proxy)
+- `IsProxy()` can now be called to check if given table is a proxy or not (function must be called by indexing it from the Proxy module instead of the proxy object)
 
-local NewProxy = Proxy.new()
+    ```lua
+    local Proxy = require(Source.Proxy)
 
-print(Proxy.IsProxy(NewProxy))    -- Output: true
-print(NewProxy.IsProxy(NewProxy)) -- Errors: attempt to call a nil value
+    local NewProxy = Proxy.new()
 
-print(Proxy.IsProxy({})) -- Output: false
-```
+    print(Proxy.IsProxy(NewProxy))    -- Output: true
+    print(NewProxy.IsProxy(NewProxy)) -- Errors: attempt to call a nil value
+
+    print(Proxy.IsProxy({})) -- Output: false
+    ```
 - Missing moonwave documentation for `ListenToDisconnection()`
 - Missing type annotation
+
+---
 
 ## [3.0.0] - 2022-05-01
 
@@ -40,10 +42,14 @@ print(Proxy.IsProxy({})) -- Output: false
 ### Fixed
 - A lot of issues, in general. The module should have near to 0 bugs
 
+---
+
 ## [2.1.4] - 2022-04-01
 
 ### Added
 - `Indexed` & `Changed` now pass the proxy as a third argument
+
+---
 
 ## [2.1.3] - 2022-03-01
 
@@ -51,16 +57,22 @@ print(Proxy.IsProxy({})) -- Output: false
 - Proxies didn't inherit parent's custom properties
 - `build` folder ([Moonwave](https://upliftgames.github.io/moonwave/) page) was being included inside the package installation, updated wally.toml exclude
 
+---
+
 ## [2.1.2] - 2022-03-01
 
 ### Fixed
 - Constructor attempted to check the lenght of a nil value when checking if children proxies should inherit properties
+
+---
 
 ## [2.1.1] - 2022-03-01
 
 ### Fixed
 - Fixed `.new` trying to iterate through CustomProperties even if it is nil
 - Fixed passing default proxy properties as custom properties when constructing a new proxy from `__newindex` 
+
+---
 
 ## [2.1.0] - 2022-03-01
 
@@ -83,6 +95,8 @@ proxy origin
 - Fixed optional types being required types when constructing a proxy
 - Proxies only inherited properties when being newly added, but tables found inside the proxy origin were not converted to proxies, fixed that
 
+---
+
 ## [2.0.2] - 2022-01-01
 
 *Happy new year!*
@@ -101,6 +115,8 @@ if a proxy's key is set to nil and its value is a proxy table, it will automatic
 
 ### Fixed
 - Changed signal could fire even if the value was not actually changed to a new or different value
+
+---
 
 ## [2.0.1] - 2021-11-25
 
