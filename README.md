@@ -15,7 +15,7 @@ end)
 Proxy.Test = 10 -- Output: Changed -> Test 10 nil
 
 print(Proxy.Test) -- 1st Output: 10
-                -- 2nd Output: Indexed -> Test 10
+                  -- 2nd Output: Indexed -> Test 10
 
 Disconnect() -- The connection gets disconnected by just calling it, magic!
 
