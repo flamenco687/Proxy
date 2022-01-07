@@ -190,7 +190,7 @@ end
     print(Proxy.IsProxy({}))       -- Output: false
     ```
 
-    :::note
+    :::caution
     To check if a table is a proxy, you should call `.IsProxy()` using the required [ModuleScript] or
     the function will throw out an error since the created proxy class does not contain the function
 
@@ -292,7 +292,7 @@ end
     Fires change listeners. Change listeners will only fire if the updated value
     differs from its last version
 
-    :::note Child proxies are automatically cleaned up
+    :::tip Child proxies are automatically cleaned up
     When a key's value is changed, if the old value is a proxy object, it will automatically
     be destroyed using the `Destroy` method
 

@@ -4,8 +4,8 @@
 - Moonwave: [0.2.12] -> [0.3.3] 
 
 ### Added
-- Type: Connection = (CheckConnectionStatus: boolean?) -> boolean | nil
-- Type: Listeners = {[(...any) -> (...any)]: boolean}
+- Type: Connection = `(CheckConnectionStatus: boolean?) -> boolean | nil`
+- Type: Listeners = `{[(...any) -> (...any)]: boolean}`
 - A first argument can now be passed when firing a connection to check if its still connected instead of disconnecting it
 
 ### Changes
