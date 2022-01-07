@@ -34,12 +34,12 @@ Proxy.__index = Proxy
 --- @readonly
 
 --- Table of functions that fire when a proxy's key is indexed
---- @prop _IndexedListeners Signal
+--- @prop _IndexedListeners Listeners
 --- @within Proxy
 --- @readonly
 
 --- Table of functions that fire when a key is added to the proxy or changed
---- @prop _ChangedListeners Signal
+--- @prop _ChangedListeners Listeners
 --- @within Proxy
 --- @readonly
 
@@ -47,6 +47,7 @@ Proxy.__index = Proxy
 --[=[
     Returns a callback function that must be called to disconnect a listeners
 
+    @private
     @since v3.0.0
 
     @function ListenToDisconnection
@@ -54,21 +55,27 @@ Proxy.__index = Proxy
 
     @param Callback (...any?) -> ()
     @param Source table -- Where to store active callbacks
-    @return () -> ()
+    @return (CheckConnectionStatus: boolean) -> ()
 ]=]
-local function ListenToDisconnection(Callback: (...any?) -> (), Source: table): () -> ()
+local function ListenToDisconnection(Callback: (...any?) -> (), Source: Listeners): Connection
     Source[Callback] = true
 
     local Disconnected: boolean = false
 
-    return function()
+    return function(CheckConnectionStatus: boolean?): boolean
+        if CheckConnectionStatus then
+            return Disconnected
+        end
+
         if Disconnected or Source == nil then
-            return
+            return false
         end
 
         Disconnected = true
 
         Source[Callback] = nil
+
+        return true
     end
 end
 
@@ -77,12 +84,13 @@ end
 
     @since v3.0.0
 
+    @method OnIndex
     @within Proxy
 
     @param Callback (Key: string?, Value: any?, Proxy: Proxy?) -> ()
     @return Connection
 ]=]
-function OnIndex(self: Proxy, Callback: (Key: string?, Value: any?, Proxy: Proxy?) -> ()): RBXScriptConnection
+function OnIndex(self: Proxy, Callback: (Key: string?, Value: any?, Proxy: Proxy?) -> ()): Connection
     return ListenToDisconnection(Callback, self._IndexedListeners)
 end
 
@@ -91,19 +99,22 @@ end
 
     @since v3.0.0
 
+    @method OnChange
     @within Proxy
 
     @param Callback (Key: string?, Value: any?, OldValue: any?, Proxy: Proxy?) -> ()
     @return Connection
 ]=]
-function OnChange(self: Proxy, Callback: (Key: string?, Value: any?, OldValue: any?, Proxy: Proxy?) -> ()): RBXScriptConnection
+function OnChange(self: Proxy, Callback: (Key: string?, Value: any?, OldValue: any?, Proxy: Proxy?) -> ()): Connection
     return ListenToDisconnection(Callback, self._ChangedListeners)
 end
 
 --[=[
     Destroys the proxy and disconnects all listeners
 
+    @method Destroy
     @within Proxy
+
     @return nil
 ]=]
 function Destroy(self: Proxy): nil
@@ -116,12 +127,20 @@ end
 --[=[
     Specifically looks for the desired key inside the proxy table.
 
+    ```lua
+    print(Proxy._Proxy)        -- Outputs: {}
+    print(Proxy:Get("_Proxy")) -- Outputs: nil
+
+    -- Proxy._Proxy is the proxy table, since it is empty it returns an empty table
+    -- Proxy:Get("_Proxy") is actually looking for Proxy._Proxy["_Proxy"], which is nil
+    ```
+
     :::info
     Use this in case the proxy object has a property that is also a key inside the proxy table
 
     @since v3.0.0
 
-    @function Get
+    @method Get
     @within Proxy
 
     @param Key string
@@ -134,12 +153,21 @@ end
 --[=[
     Specifically sets the value for the desired key inside the proxy table.
 
+    ```lua
+    Proxy:Set("_Proxy", 10)
+
+    print(Proxy._Proxy)        -- Outputs: { _Proxy = 10 }
+    print(Proxy:Get("_Proxy")) -- Outputs: 10
+
+    -- :Set() will only modify values inside Proxy._Proxy
+    ```
+
     :::info
     Use this in case the proxy object has a property that is also a key inside the proxy table
 
     @since v3.0.0
 
-    @function Set
+    @method Set
     @within Proxy
 
     @param Key string
@@ -152,7 +180,35 @@ function Set(self: Proxy, Key: string, Value: any): any
 end
 
 --[=[
+    Checks if a given table is or not a proxy (checks its metatable)
+    ```lua
+    local Proxy = require(Source.Proxy)
+
+    local NewProxy = Proxy.new()
+
+    print(Proxy.IsProxy(NewProxy)) -- Output: true
+    print(Proxy.IsProxy({}))       -- Output: false
+    ```
+
+    :::note
+    To check if a table is a proxy, you should call `.IsProxy()` using the required [ModuleScript] or
+    the function will throw out an error since the created proxy class does not contain the function
+
+    @since v3.1.0
+
+    @within Proxy
+
+    @param Table table
+    @return boolean
+]=]
+function Proxy.IsProxy(Table: table): boolean
+    return getmetatable(Table) == Proxy
+end
+
+--[=[
     Creates a new proxy object
+
+    @tag Constructor
 
     @within Proxy
 
@@ -189,28 +245,6 @@ function Proxy.new(Origin: table?, CustomProperties: {[string]: any}?): Proxy
 end
 
 --[=[
-    Checks if a given table is or not a proxy (checks its metatable)
-    ```lua
-    local Proxy = require(Source.Proxy)
-
-    local NewProxy = Proxy.new()
-
-    print(Proxy.IsProxy(NewProxy)) -- Output: true
-    print(Proxy.IsProxy({}))       -- Output: false
-    ```
-
-    @since v3.1.0
-
-    @within Proxy
-
-    @param Table table
-    @return boolean
-]=]
-function Proxy.IsProxy(Table: table): boolean
-    return getmetatable(Table) == Proxy
-end
-
---[=[
     Fires all the listeners from the specified source along with the passed arguments
 
     @private
@@ -219,11 +253,11 @@ end
     @function FireListeners
     @within Proxy
 
-    @param Source table
-    @param ... any
+    @param Source Listeners
+    @param ... any -- These are the arguments passed to the callback
     @return nil
 ]=]
-local function FireListeners(Source: table, ...: any)
+local function FireListeners(Source: Listeners, ...: any)
     for Callback: (...any) -> (...any) in pairs(Source) do
         task.spawn(Callback, ...)
     end
@@ -232,9 +266,9 @@ end
 --[=[
     Fires index listeners and returns the key's value
 
-    :::note Class members can be indexed
+    :::note Class members can also be indexed
     Proxy's properties or methods can be returned when indexing them. To only get
-    or set actual values from the proxy table, use the `:Get` and `:Set` methods
+    or set actual values from the proxy table, use the [Proxy:Set] and [Proxy:Get] methods
 
     @private
     @tag Metamethod
@@ -269,7 +303,7 @@ end
     @param Value any
     @return nil
 ]=]
-function Proxy:__newindex(Key: string, Value: any): nil
+function Proxy:__newindex(Key: string, Value: any)
 	local CurrentValue: any = self._Proxy[Key]
 
 	if CurrentValue ~= Value then
@@ -281,13 +315,21 @@ function Proxy:__newindex(Key: string, Value: any): nil
 
         FireListeners(self._ChangedListeners, Key, Value, CurrentValue, self)
 	end
-
-    return nil
 end
 
-type table = {}
---- Used to represent a table instead of typing {} since its more visual and I'm used to it
---- @type table {}
+type table = {[any]: any}
+--- Represents a table that could contain any value indexed by anything
+--- @type table {[any]: any}
+--- @within Proxy
+
+type Connection = (CheckConnectionStatus: boolean?) -> boolean
+--- Represents a connection between a callback and a listener. To disconnect it, the function must be called
+--- @type Connection (CheckConnectionStatus: boolean) -> boolean
+--- @within Proxy
+
+type Listeners = {[(...any) -> (...any)]: boolean}
+--- Represents a list of callbacks that will listen to changes of the desired property, table, etc...
+--- @type Listeners {[(...any) -> (...any)]: boolean}
 --- @within Proxy
 
 type Proxy = typeof(Proxy.new())

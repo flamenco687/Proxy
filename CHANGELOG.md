@@ -1,7 +1,27 @@
-## [3.1.0] - 2022-06-01
+## v3.1.1 - 2022-07-01
+
+### Upgraded
+- Moonwave: [0.2.12] -> [0.3.3] 
 
 ### Added
-- `IsProxy()` can now be called to check if given table is a proxy or not (function must be called by indexing it from the Proxy module instead of the proxy object)
+- Type: Connection = (CheckConnectionStatus: boolean?) -> boolean | nil
+- Type: Listeners = {[(...any) -> (...any)]: boolean}
+- A first argument can now be passed when firing a connection to check if its still connected instead of disconnecting it
+
+### Changes
+- Connections now return a boolean depending on the connection status where false is not connected and true connected
+
+### Improvements
+- Improved type annotations
+- Improved method documentations
+- Type table now reflects what it had to reflect
+
+---
+
+## v3.1.0 - 2022-06-01
+
+### Added
+- `Proxy.IsProxy()` can now be called to check if given table is a proxy or not (function must be called by indexing it from the Proxy module instead of the proxy object)
 
     ```lua
     local Proxy = require(Source.Proxy)
@@ -18,12 +38,12 @@
 
 ---
 
-## [3.0.0] - 2022-05-01
+## v3.0.0 - 2022-05-01
 
 ### Added
-- `:OnChange()` in replacement of `.Changed`, directly connects the passed functions and can be disconnected by calling the returned function
-- `:OnIndex()` in replacement of `.Indexed`, directly connects the passed functions and can be disconnected by calling the returned function
-- `:Set()` and `:Get()` to interact with values inside the proxy table that are proxy properties or methods
+- `Proxy:OnChange()` in replacement of `.Changed`, directly connects the passed functions and can be disconnected by calling the returned function
+- `Proxy:OnIndex()` in replacement of `.Indexed`, directly connects the passed functions and can be disconnected by calling the returned function
+- `Proxy:Set()` and `Proxy:Get()` to interact with values inside the proxy table that are proxy properties or methods
 - Better documentation and extra functions regarding the new connections system
 
 ### Removed
@@ -44,14 +64,14 @@
 
 ---
 
-## [2.1.4] - 2022-04-01
+## v2.1.4 - 2022-04-01
 
 ### Added
 - `Indexed` & `Changed` now pass the proxy as a third argument
 
 ---
 
-## [2.1.3] - 2022-03-01
+## v2.1.3 - 2022-03-01
 
 ### Fixed
 - Proxies didn't inherit parent's custom properties
@@ -59,26 +79,26 @@
 
 ---
 
-## [2.1.2] - 2022-03-01
+## v2.1.2 - 2022-03-01
 
 ### Fixed
 - Constructor attempted to check the lenght of a nil value when checking if children proxies should inherit properties
 
 ---
 
-## [2.1.1] - 2022-03-01
+## v2.1.1 - 2022-03-01
 
 ### Fixed
-- Fixed `.new` trying to iterate through CustomProperties even if it is nil
+- Fixed `.new()` trying to iterate through CustomProperties even if it is nil
 - Fixed passing default proxy properties as custom properties when constructing a new proxy from `__newindex` 
 
 ---
 
-## [2.1.0] - 2022-03-01
+## v2.1.0 - 2022-03-01
 
 *Since this version, the Proxy project uses the default tree structure of `src/init.lua` so moonwave documentation can be generated with ease.*
 
-### Updated
+### Upgraded
 - StyLua: [0.11.2] -> [0.11.3]
 
 ### Added
@@ -97,10 +117,10 @@ proxy origin
 
 ---
 
-## [2.0.2] - 2022-01-01
+## v2.0.2 - 2022-01-01
 
 *Happy new year!*
-### Updated
+### Upgraded
 - Selene: [0.14.0] -> [0.15.0]
 
 ### Changed
@@ -118,7 +138,11 @@ if a proxy's key is set to nil and its value is a proxy table, it will automatic
 
 ---
 
-## [2.0.1] - 2021-11-25
+## v2.0.1 - 2021-11-25
 
 ### Changed
 - Renamed `:Kill()` to `:Destroy()` for better consistency
+
+---
+
+*Late versions were never documented nor uploaded to github because they were developed without rojo. Since v2.0.0, proxy's development moved to rojo and the documentation process started*
