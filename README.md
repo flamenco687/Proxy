@@ -1,8 +1,4 @@
-<div align="center">
-  
-  ![proxy-banner-no_background-little](https://user-images.githubusercontent.com/36084202/148573918-4ff63206-e060-4bf2-a475-4d4870a141b9.png)
-
-</div>
+![proxy-banner-no_background](https://user-images.githubusercontent.com/36084202/148576482-a52bd673-dea5-414a-ac80-4108d55e4c4d.png)
 
 ---
 
