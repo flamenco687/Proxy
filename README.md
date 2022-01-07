@@ -1,13 +1,16 @@
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/36084202/148556718-46033e98-6be6-43b1-85a6-cd0f6097a43e.png">
-</p>
+<div align="center">
+  
+  ![proxy-banner-no_background-little](https://user-images.githubusercontent.com/36084202/148573918-4ff63206-e060-4bf2-a475-4d4870a141b9.png)
+
+</div>
 
 ---
-Ever heard of proxies? Well, this one is a little bit different. Proxy's purpose is not working as a layer of communication between two machines but instead, working as an intermediary between the Server/Client and a table.
+
+Ever heard of [proxies](https://en.wikipedia.org/wiki/Proxy_server)? Well, this one is a little bit different. Proxy's purpose is not working as a layer of communication between two machines but instead, working as an intermediary between the Server/Client and a table.
 
 Ever tried to detect changes in a roblox vanilla table? Well, I tried and found out that it wasn't possible by default because there are no functions nor metamethods to do so. After a while searching I finally found out that the only way to detect direct changes and indexes of a table was by using a proxy table. 
 
-This is done by detecting indexes or newindexes inside the main table and passing or returning the values from the proxy table so the main one always remains empty and always transmits changes. 
+This is done by detecting indexes or newindexes inside the main table and passing or returning the values from the proxy table so the main one always remains empty and always notices changes. 
 
 So that's it, one metatable, two metamethods and a normal table to detect changes in vanilla tables, but if you want some extra functionality here it is, Proxy. *We've got moonwave documentation, wohoo!*
 
@@ -45,6 +48,8 @@ Proxy = "flamenco687/roblox-proxy@3.1.1"
 [Download the latest release](https://github.com/flamenco687/Proxy/releases/tag/v3.1.1)
 ### Roblox
 By the time being, Proxy still has no roblox model to get from the library but it'll soon be avaible.
+# Documentation
+All needed documentation was generated with [Moonwave](https://github.com/UpliftGames/moonwave) and is found here https://flamenco687.github.io/Proxy/.
 # Contributing
 Proxy was made for personal use and may not adequate for all use-cases, if you want to add your own point of view and ideas to proxy feel free to contribute by forking it, commiting changes and opening pull requests. 
 
