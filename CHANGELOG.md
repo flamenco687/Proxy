@@ -1,3 +1,10 @@
+## v3.1.2 - 2022-20-01
+
+### Fixed
+- Connection callbacks did not reflect accurately the connection status if the proxy was destroyed before disconnecting the task
+
+---
+
 ## v3.1.1 - 2022-07-01
 
 ### Upgraded

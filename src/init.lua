@@ -60,18 +60,14 @@ Proxy.__index = Proxy
 local function ListenToDisconnection(Callback: (...any?) -> (), Source: Listeners): Connection
     Source[Callback] = true
 
-    local Disconnected: boolean = false
-
     return function(CheckConnectionStatus: boolean?): boolean
         if CheckConnectionStatus then
-            return Disconnected
+            return Source[Callback]
         end
 
-        if Disconnected or Source == nil then
+        if not Source[Callback] then
             return false
         end
-
-        Disconnected = true
 
         Source[Callback] = nil
 
