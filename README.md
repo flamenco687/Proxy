@@ -38,7 +38,7 @@ Proxy.Test = 50 -- Nothing prints out
 Proxy is avaible as a [wally package](https://wally.run/package/flamenco687/roblox-proxy)! Just go ahead and add it to your *wally.toml* as a dependency
 ```toml
 [dependencies]
-Proxy = "flamenco687/roblox-proxy@3.1.1"
+Proxy = "flamenco687/roblox-proxy@3.1.2"
 ```
 ### Github releases
 [Download the latest release](https://github.com/flamenco687/Proxy/releases/tag/v3.1.1)
