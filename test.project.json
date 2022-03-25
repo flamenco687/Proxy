@@ -7,8 +7,7 @@
       "$className": "ReplicatedStorage",
 
       "Proxy": {
-        "$className": "ModuleScript",
-        "$path": "src/init"
+        "$path": "src"
       }
     }
   }

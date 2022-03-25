@@ -17,6 +17,7 @@ exclude = [ # These files are excluded from the final release that will be packa
     "docs", 
     "test",
     "build",
+    "assets",
 
     # .toml
 
