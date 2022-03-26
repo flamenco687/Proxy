@@ -1,3 +1,5 @@
+local ActiveListeners: ActiveListeners = {}
+
 --[=[
     @class Proxy
 
@@ -34,12 +36,12 @@ Proxy.__index = Proxy
 --- @readonly
 
 --- Table of functions that fire when a proxy's key is indexed
---- @prop _IndexedListeners Listeners
+--- @prop IndexListeners Listeners
 --- @within Proxy
 --- @readonly
 
 --- Table of functions that fire when a key is added to the proxy or changed
---- @prop _ChangedListeners Listeners
+--- @prop ChangeListeners Listeners
 --- @within Proxy
 --- @readonly
 
@@ -52,26 +54,49 @@ Proxy.__index = Proxy
 
     @function ListenToDisconnection
     @within Proxy
-
-    @param Callback (...any?) -> ()
-    @param Source table -- Where to store active callbacks
-    @return (CheckConnectionStatus: boolean) -> ()
 ]=]
-local function ListenToDisconnection(Callback: (...any?) -> (), Source: Listeners): Connection
-    Source[Callback] = true
+local function ListenToDisconnection(self: Proxy, Callback: (...any?) -> (), Source: string): Connection
+    ActiveListeners[self][Source][Callback] = true
 
-    return function(CheckConnectionStatus: boolean?): boolean
-        if CheckConnectionStatus then
-            return Source[Callback]
+    local Connection: Connection
+
+    Connection = function(CheckConnectionStatus: boolean?): boolean?
+        local SourceStillExists: boolean = ActiveListeners[self] and ActiveListeners[self][Source]
+
+        if SourceStillExists then
+            if CheckConnectionStatus then
+                return if SourceStillExists and ActiveListeners[self][Source][Callback] then true else nil
+            end
+
+            if not ActiveListeners[self][Source][Callback] then
+                return nil
+            end
+
+            ActiveListeners[self][Source][Callback] = nil
+            Connection = nil
+
+            return nil
+        else
+            return nil
         end
+    end
 
-        if not Source[Callback] then
-            return false
-        end
+    return Connection
+end
 
-        Source[Callback] = nil
+--[=[
+    Fires all the listeners from the specified source along with the passed arguments
 
-        return true
+    @since v3.0.0
+
+    @private
+
+    @function FireListeners
+    @within Proxy
+]=]
+local function FireListeners(Source: Listeners, ...: any)
+    for Callback: (...any) -> (...any) in pairs(Source) do
+        task.spawn(Callback, ...)
     end
 end
 
@@ -82,12 +107,9 @@ end
 
     @method OnIndex
     @within Proxy
-
-    @param Callback (Key: string?, Value: any?, Proxy: Proxy?) -> ()
-    @return Connection
 ]=]
 function OnIndex(self: Proxy, Callback: (Key: string?, Value: any?, Proxy: Proxy?) -> ()): Connection
-    return ListenToDisconnection(Callback, self._IndexedListeners)
+    return ListenToDisconnection(self, Callback, "IndexListeners")
 end
 
 --[=[
@@ -102,7 +124,7 @@ end
     @return Connection
 ]=]
 function OnChange(self: Proxy, Callback: (Key: string?, Value: any?, OldValue: any?, Proxy: Proxy?) -> ()): Connection
-    return ListenToDisconnection(Callback, self._ChangedListeners)
+    return ListenToDisconnection(self, Callback, "ChangeListeners")
 end
 
 --[=[
@@ -110,14 +132,73 @@ end
 
     @method Destroy
     @within Proxy
-
-    @return nil
 ]=]
 function Destroy(self: Proxy): nil
+    if ActiveListeners[self] then
+        for _, Listeners: Listeners in pairs(ActiveListeners[self]) do
+            for Connection: Connection in pairs(Listeners) do
+                Connection()
+            end
+
+            Listeners = nil
+        end
+
+        ActiveListeners[self] = nil
+    end
+
     setmetatable(self, nil)
     self = nil
 
     return nil
+end
+
+--[=[
+    Fires index listeners and returns the key's value
+
+    :::note Class members can also be indexed
+    Proxy's properties or methods can be returned when indexing them. To only get
+    or set actual values from the proxy table, use the [Proxy:Set] and [Proxy:Get] methods
+
+    @private
+
+    @within Proxy
+]=]
+local function Index(self: Proxy, Key: string): any
+    local Value: any = self._Proxy[Key]
+
+    if Key ~= nil and Value ~= nil then -- Otherwise, index listeners will get fired while destroying the proxy
+        FireListeners(ActiveListeners[self].IndexListeners, Key, Value, self)
+    end
+
+	return Value
+end
+
+--[=[
+    Fires change listeners. Change listeners will only fire if the updated value
+    differs from its last version
+
+    :::tip Child proxies are automatically cleaned up
+    When a key's value is changed, if the old value is a proxy object, it will automatically
+    get cleaned up using [Proxy:Destroy]
+
+    @private
+
+    @within Proxy
+]=]
+local function NewIndex(self: Proxy, Key: string, Value: any)
+    local CurrentValue: any = self._Proxy[Key]
+
+	if CurrentValue ~= Value then
+        if type(CurrentValue) == "table" and Proxy.IsProxy(CurrentValue) then
+            CurrentValue:Destroy()
+        end
+
+        self._Proxy[Key] = Value
+
+        if Key ~= nil and Value ~= nil then -- Otherwise, index listeners will get fired while destroying the proxy
+            FireListeners(ActiveListeners[self].ChangeListeners, Key, Value, CurrentValue, self)
+        end
+	end
 end
 
 --[=[
@@ -138,12 +219,9 @@ end
 
     @method Get
     @within Proxy
-
-    @param Key string
-    @return any
 ]=]
 function Get(self: Proxy, Key: string): any
-    return self._Proxy[Key]
+    return Index(self, Key)
 end
 
 --[=[
@@ -165,15 +243,18 @@ end
 
     @method Set
     @within Proxy
-
-    @param Key string
-    @param Value any
-    @return any -- Returns the value that was initially passed
 ]=]
 function Set(self: Proxy, Key: string, Value: any): any
-    self._Proxy[Key] = Value
-    return Value
+    return NewIndex(self, Key, Value)
 end
+
+local Methods = {
+    Get = Get,
+    Set = Set,
+    Destroy = Destroy,
+    OnIndex = OnIndex,
+    OnChange = OnChange,
+}
 
 --[=[
     Checks if a given table is or not a proxy (checks its metatable)
@@ -193,9 +274,6 @@ end
     @since v3.1.0
 
     @within Proxy
-
-    @param Table table
-    @return boolean
 ]=]
 function Proxy.IsProxy(Table: table): boolean
     return getmetatable(Table) == Proxy
@@ -207,110 +285,28 @@ end
     @tag Constructor
 
     @within Proxy
-
-    @param Origin table? -- Optional table to use as template for the proxy table
-    @param CustomProperties {[string]: any}? -- Custom properties can be added to the proxy before constructing it
-    @return Proxy
 ]=]
-function Proxy.new(Origin: table?, CustomProperties: {[string]: any}?): Proxy
-	local self = {
-        _Proxy = if Origin then Origin else {},
-        _IndexedListeners = {},
-        _ChangedListeners = {},
-    }
+function Proxy.new(Origin: table?): Proxy
+	local self = { _Proxy = if Origin then Origin else {} }
 
-    if CustomProperties then
-        for Property, Value in pairs(CustomProperties) do
-            if self[Property] ~= nil then
-                warn("Tried to override default proxy property with custom property: "..Property..". Action was rejected")
-            else
-                self[Property] = Value
-            end
-        end
-    end
-
-    self._Methods = {
-        Destroy = Destroy,
-        OnIndex = OnIndex,
-        OnChange = OnChange,
-        Get = Get,
-        Set = Set
+    ActiveListeners[self] = {
+        IndexListeners = {},
+        ChangeListeners = {},
     }
 
 	return setmetatable(self, Proxy)
 end
 
---[=[
-    Fires all the listeners from the specified source along with the passed arguments
-
-    @private
-    @since v3.0.0
-
-    @function FireListeners
-    @within Proxy
-
-    @param Source Listeners
-    @param ... any -- These are the arguments passed to the callback
-    @return nil
-]=]
-local function FireListeners(Source: Listeners, ...: any)
-    for Callback: (...any) -> (...any) in pairs(Source) do
-        task.spawn(Callback, ...)
-    end
-end
-
---[=[
-    Fires index listeners and returns the key's value
-
-    :::note Class members can also be indexed
-    Proxy's properties or methods can be returned when indexing them. To only get
-    or set actual values from the proxy table, use the [Proxy:Set] and [Proxy:Get] methods
-
-    @private
-    @tag Metamethod
-
-    @param Key string
-    @return any
-]=]
 function Proxy:__index(Key: string): any
-    if Key == "OnIndex" or Key == "OnChange" or Key == "Destroy" or Key == "Get" or Key == "Set" then
-        return self._Methods[Key] -- Methods are found inside a table and must be returned like this when indexed
+    if Methods[Key] then
+        return Methods[Key] -- Methods are found inside a table and must be returned like this when indexed
+    else
+        return Index(self, Key)
     end
-
-    local Value: any = self._Proxy[Key]
-
-    FireListeners(self._IndexedListeners, Key, Value, self)
-
-	return Value
 end
 
---[=[
-    Fires change listeners. Change listeners will only fire if the updated value
-    differs from its last version
-
-    :::tip Child proxies are automatically cleaned up
-    When a key's value is changed, if the old value is a proxy object, it will automatically
-    be destroyed using the `Destroy` method
-
-    @private
-    @tag Metamethod
-
-    @param Key string
-    @param Value any
-    @return nil
-]=]
 function Proxy:__newindex(Key: string, Value: any)
-	local CurrentValue: any = self._Proxy[Key]
-
-	if CurrentValue ~= Value then
-        if type(CurrentValue) == "table" and getmetatable(CurrentValue) == Proxy then
-            CurrentValue:Destroy()
-        end
-
-        self._Proxy[Key] = Value
-
-        FireListeners(self._ChangedListeners, Key, Value, CurrentValue, self)
-	end
+	return NewIndex(self, Key, Value)
 end
 
 type table = {[any]: any}
@@ -328,6 +324,23 @@ type Listeners = {[(...any) -> (...any)]: boolean}
 --- @type Listeners {[(...any) -> (...any)]: boolean}
 --- @within Proxy
 
-type Proxy = typeof(Proxy.new())
+type ActiveListeners = {
+    [table]: {
+        IndexListeners: Listeners,
+        ChangeListeners: Listeners,
+    }
+}
+
+type Proxy = {
+    _Proxy: table,
+
+    IsProxy: (Table: table) -> boolean,
+
+    OnChange: (self: Proxy, Callback: (Key: string?, Value: any?, OldValue: any?, Proxy: Proxy?) -> ()) -> Connection,
+    OnIndex: (self: Proxy, Callback: (Key: string?, Value: any?, Proxy: Proxy?) -> ()) -> Connection,
+    Set: (self: Proxy, Key: string, Value: any) -> any,
+    Get: (self: Proxy, Key: string) -> any,
+    Destroy: (self: Proxy) -> nil
+}
 
 return Proxy
