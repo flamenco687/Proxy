@@ -9,6 +9,14 @@
       "Proxy": {
         "$path": "src"
       }
+    },
+
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+
+      "Test": {
+        "$path": "test"
+      }
     }
   }
 }
