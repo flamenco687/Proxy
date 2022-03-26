@@ -9,7 +9,7 @@ local ActiveListeners: ActiveListeners = {}
     ```lua
     local Proxy = Proxy.new()
 
-    Proxy:OnIndex(function(Key: string, Value: any) --! Will not fire when the key changes
+    Proxy:OnIndex(function(Key: string, Value: any) -- Will not fire when the key changes
         print("Indexed ->", Key, Value)
     end)
 
@@ -35,22 +35,13 @@ Proxy.__index = Proxy
 --- @within Proxy
 --- @readonly
 
---- Table of functions that fire when a proxy's key is indexed
---- @prop IndexListeners Listeners
---- @within Proxy
---- @readonly
-
---- Table of functions that fire when a key is added to the proxy or changed
---- @prop ChangeListeners Listeners
---- @within Proxy
---- @readonly
-
 
 --[=[
-    Returns a callback function that must be called to disconnect a listeners
+    Returns a connection that must be called to disconnect a listener function
+
+    @since v3.0.0
 
     @private
-    @since v3.0.0
 
     @function ListenToDisconnection
     @within Proxy
@@ -84,6 +75,7 @@ local function ListenToDisconnection(self: Proxy, Callback: (...any?) -> (), Sou
     return Connection
 end
 
+
 --[=[
     Fires all the listeners from the specified source along with the passed arguments
 
@@ -100,6 +92,7 @@ local function FireListeners(Source: Listeners, ...: any)
     end
 end
 
+
 --[=[
     Connects passed callback to a signal that fires when a key is indexed
 
@@ -113,19 +106,17 @@ function OnIndex(self: Proxy, Callback: (Key: string?, Value: any?, Proxy: Proxy
 end
 
 --[=[
-    Connects passed callback to a signal that fires when a key is added or changed
+    Connects passed function to a signal that listens to key additions or changes
 
     @since v3.0.0
 
     @method OnChange
     @within Proxy
-
-    @param Callback (Key: string?, Value: any?, OldValue: any?, Proxy: Proxy?) -> ()
-    @return Connection
 ]=]
 function OnChange(self: Proxy, Callback: (Key: string?, Value: any?, OldValue: any?, Proxy: Proxy?) -> ()): Connection
     return ListenToDisconnection(self, Callback, "ChangeListeners")
 end
+
 
 --[=[
     Destroys the proxy and disconnects all listeners
@@ -152,12 +143,15 @@ function Destroy(self: Proxy): nil
     return nil
 end
 
+
 --[=[
-    Fires index listeners and returns the key's value
+    Fires index listeners and returns the requested key's value
 
     :::note Class members can also be indexed
-    Proxy's properties or methods can be returned when indexing them. To only get
-    or set actual values from the proxy table, use the [Proxy:Set] and [Proxy:Get] methods
+    Proxy properties or methods can be returned when indexing them. To only set
+    or get actual values from the proxy table, use [Proxy:Set] and [Proxy:Get]
+
+    @since v3.1.3
 
     @private
 
@@ -173,13 +167,16 @@ local function Index(self: Proxy, Key: string): any
 	return Value
 end
 
+
 --[=[
     Fires change listeners. Change listeners will only fire if the updated value
-    differs from its last version
+    differs from its last value
 
     :::tip Child proxies are automatically cleaned up
     When a key's value is changed, if the old value is a proxy object, it will automatically
     get cleaned up using [Proxy:Destroy]
+
+    @since v3.1.3
 
     @private
 
@@ -201,6 +198,7 @@ local function NewIndex(self: Proxy, Key: string, Value: any)
 	end
 end
 
+
 --[=[
     Specifically looks for the desired key inside the proxy table.
 
@@ -213,7 +211,7 @@ end
     ```
 
     :::info
-    Use this in case the proxy object has a property that is also a key inside the proxy table
+    Use this in case the proxy object has a property that also is a key inside the proxy table
 
     @since v3.0.0
 
@@ -237,7 +235,7 @@ end
     ```
 
     :::info
-    Use this in case the proxy object has a property that is also a key inside the proxy table
+    Use this in case the proxy object should have a key inside the proxy table that also is a proxy property
 
     @since v3.0.0
 
@@ -248,6 +246,7 @@ function Set(self: Proxy, Key: string, Value: any): any
     return NewIndex(self, Key, Value)
 end
 
+
 local Methods = {
     Get = Get,
     Set = Set,
@@ -256,8 +255,9 @@ local Methods = {
     OnChange = OnChange,
 }
 
+
 --[=[
-    Checks if a given table is or not a proxy (checks its metatable)
+    Checks if the given table is or not a proxy (checks its metatable)
     ```lua
     local Proxy = require(Source.Proxy)
 
@@ -268,8 +268,7 @@ local Methods = {
     ```
 
     :::caution
-    To check if a table is a proxy, you should call `.IsProxy()` using the required [ModuleScript] or
-    the function will throw out an error since the created proxy class does not contain the function
+    A good practice is to check
 
     @since v3.1.0
 
@@ -310,26 +309,34 @@ function Proxy:__newindex(Key: string, Value: any)
 end
 
 type table = {[any]: any}
---- Represents a table that could contain any value indexed by anything
+--- A table that could contain any value indexed by any type of value
 --- @type table {[any]: any}
 --- @within Proxy
 
 type Connection = (CheckConnectionStatus: boolean?) -> boolean
---- Represents a connection between a callback and a listener. To disconnect it, the function must be called
+--- Connection between a signal and a listener function. To disconnect it, the connection must be called like a function with no arguments
 --- @type Connection (CheckConnectionStatus: boolean) -> boolean
 --- @within Proxy
 
 type Listeners = {[(...any) -> (...any)]: boolean}
---- Represents a list of callbacks that will listen to changes of the desired property, table, etc...
+--- List of listener functions that will fire on signal events
 --- @type Listeners {[(...any) -> (...any)]: boolean}
 --- @within Proxy
 
-type ActiveListeners = {
-    [table]: {
-        IndexListeners: Listeners,
-        ChangeListeners: Listeners,
-    }
+type ProxyListeners = {
+    IndexListeners: Listeners,
+    ChangeListeners: Listeners,
 }
+--- Listeners of a proxy
+--- @interface ProxyListeners
+--- @within Proxy
+--- .IndexListeners Listeners
+--- .ChangeListeners Listeners
+
+type ActiveListeners = {[table]: ProxyListeners}
+--- List of active listeners indexed by their parent proxy
+--- @type ActiveListeners {[table]: ProxyListeners}
+--- @within Proxy
 
 type Proxy = {
     _Proxy: table,
