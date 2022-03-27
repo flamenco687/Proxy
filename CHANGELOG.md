@@ -1,4 +1,4 @@
-## v3.1.3 - 2022-20-01
+## v3.1.3 - 2022-27-03
 
 ### Removed
 - Removed the ability to specify custom properties on proxy creation. `rawset()` should be used instead after its creation
