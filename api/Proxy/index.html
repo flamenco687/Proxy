@@ -10,7 +10,7 @@ key indexing or key changes/additions
 ```lua
 local Proxy = Proxy.new()
 
-Proxy:OnIndex(function(Key: string, Value: any) --! Will not fire when the key changes
+Proxy:OnIndex(function(Key: string, Value: any) -- Will not fire when the key changes
     print(&quot;Indexed -&gt;&quot;, Key, Value)
 end)
 
@@ -32,7 +32,7 @@ key indexing or key changes/additions
 ```lua
 local Proxy = Proxy.new()
 
-Proxy:OnIndex(function(Key: string, Value: any) --! Will not fire when the key changes
+Proxy:OnIndex(function(Key: string, Value: any) -- Will not fire when the key changes
     print(&quot;Indexed -&gt;&quot;, Key, Value)
 end)
 
@@ -49,8 +49,8 @@ Disconnect() -- The connection gets disconnected by just calling it, magic!
 
 Proxy.Test = 50 -- Nothing prints out
 ```"><meta data-react-helmet="true" property="og:url" content="https://flamenco687.github.io/Proxy/api/Proxy"><meta data-react-helmet="true" name="docusaurus_locale" content="en"><meta data-react-helmet="true" name="docusaurus_tag" content="default"><link data-react-helmet="true" rel="canonical" href="https://flamenco687.github.io/Proxy/api/Proxy"><link data-react-helmet="true" rel="alternate" href="https://flamenco687.github.io/Proxy/api/Proxy" hreflang="en"><link data-react-helmet="true" rel="alternate" href="https://flamenco687.github.io/Proxy/api/Proxy" hreflang="x-default"><link rel="stylesheet" href="/Proxy/assets/css/styles.06f234af.css">
-<link rel="preload" href="/Proxy/assets/js/runtime~main.54e87518.js" as="script">
-<link rel="preload" href="/Proxy/assets/js/main.7bd282e4.js" as="script">
+<link rel="preload" href="/Proxy/assets/js/runtime~main.bb8c1c7f.js" as="script">
+<link rel="preload" href="/Proxy/assets/js/main.aa867811.js" as="script">
 </head>
 <body>
 <script>!function(){function e(e){document.documentElement.setAttribute("data-theme",e)}var t=function(){var e=null;try{e=localStorage.getItem("theme")}catch(e){}return e}();null!==t?e(t):window.matchMedia("(prefers-color-scheme: dark)").matches?e("dark"):(window.matchMedia("(prefers-color-scheme: light)").matches,e("light"))}()</script><div id="__docusaurus">
@@ -61,7 +61,7 @@ Proxy.Test = 50 -- Nothing prints out
 </p>
 <pre class="language-lua"><code class="language-lua"><span class="token keyword">local</span> Proxy <span class="token operator">=</span> Proxy<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-Proxy<span class="token punctuation">:</span><span class="token function">OnIndex</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>Key<span class="token punctuation">:</span> string<span class="token punctuation">,</span> Value<span class="token punctuation">:</span> any<span class="token punctuation">)</span> <span class="token comment">--! Will not fire when the key changes</span>
+Proxy<span class="token punctuation">:</span><span class="token function">OnIndex</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>Key<span class="token punctuation">:</span> string<span class="token punctuation">,</span> Value<span class="token punctuation">:</span> any<span class="token punctuation">)</span> <span class="token comment">-- Will not fire when the key changes</span>
     <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Indexed ->"</span><span class="token punctuation">,</span> Key<span class="token punctuation">,</span> Value<span class="token punctuation">)</span>
 <span class="token keyword">end</span><span class="token punctuation">)</span>
 
@@ -78,20 +78,20 @@ Proxy<span class="token punctuation">.</span>Test <span class="token operator">=
 
 Proxy<span class="token punctuation">.</span>Test <span class="token operator">=</span> <span class="token number">50</span> <span class="token comment">-- Nothing prints out</span>
 </code></pre>
-</div></header><h2 class="anchor anchorWithStickyNavbar_31ik" id="types">Types<a aria-hidden="true" class="hash-link" href="#types" title="Direct link to heading">​</a></h2><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="table"><code style="text-decoration:none">table</code><a aria-hidden="true" class="hash-link" href="#table" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L324"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code class="purple__nFc">type</code> <code>table<!-- --> = </code> <code class="purple__nFc">{</code><span><code>[</code><code class="blue_2Afy">any</code><code>]</code></span><code>: </code><code class="blue_2Afy">any</code><code class="purple__nFc">}</code></div><div>
-<p>Represents a table that could contain any value indexed by anything</p>
-</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="Connection"><code style="text-decoration:none">Connection</code><a aria-hidden="true" class="hash-link" href="#Connection" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L329"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code class="purple__nFc">type</code> <code>Connection<!-- --> = </code> <code class="purple__nFc">(</code><code>CheckConnectionStatus<!-- -->: </code><code class="blue_2Afy">boolean</code><code class="purple__nFc">)</code><code class="purple__nFc"> → </code><code class="blue_2Afy">boolean</code></div><div>
-<p>Represents a connection between a callback and a listener. To disconnect it, the function must be called</p>
-</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="Listeners"><code style="text-decoration:none">Listeners</code><a aria-hidden="true" class="hash-link" href="#Listeners" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L334"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code class="purple__nFc">type</code> <code>Listeners<!-- --> = </code> <code class="purple__nFc">{</code><span><code>[</code><code class="yellow_1WGw">(</code><code class="blue_2Afy">...any</code><code class="yellow_1WGw">)</code><code class="yellow_1WGw"> → </code><code class="yellow_1WGw">(</code><code class="blue_2Afy">...any</code><code class="yellow_1WGw">)</code><code>]</code></span><code>: </code><code class="blue_2Afy">boolean</code><code class="purple__nFc">}</code></div><div>
-<p>Represents a list of callbacks that will listen to changes of the desired property, table, etc...</p>
-</div><h2 class="anchor anchorWithStickyNavbar_31ik" id="properties">Properties<a aria-hidden="true" class="hash-link" href="#properties" title="Direct link to heading">​</a></h2><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="_Proxy"><code style="text-decoration:none">_Proxy</code><a aria-hidden="true" class="hash-link" href="#_Proxy" title="Direct link to heading">​</a></h3><span class="badge_3ZFo" style="color:#e74c3c"><span class="badgeTooltip_2qiw">This item is read only and cannot be modified.</span><span class="badgeToolTipTail_2yaQ"><svg xmlns="http://www.w3.org/2000/svg" height="300px" width="300px" fill="#e74c3c" x="0px" y="0px" viewBox="0 0 96 96"><path d="M70.354,15.662h-7.496H25.566c-3.282,0-5.19-0.776-5.728-1.169v-1.456c0.538-0.393,2.445-1.168,5.728-1.168h46.479V8H25.566  c-4.776,0-9.594,1.468-9.594,4.747v61.458C15.972,86.645,20.328,88,37.495,88h42.535V15.662H70.354z"></path></svg> <!-- -->Read Only</span></span><div class="repositoryDetailsContainer_1UH0"><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L35"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->.<!-- -->_Proxy<!-- -->:<!-- --> </code> <code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy#table">table</a></code></div><div>
+</div></header><h2 class="anchor anchorWithStickyNavbar_31ik" id="types">Types<a aria-hidden="true" class="hash-link" href="#types" title="Direct link to heading">​</a></h2><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="table"><code style="text-decoration:none">table</code><a aria-hidden="true" class="hash-link" href="#table" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L315"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code class="purple__nFc">type</code> <code>table<!-- --> = </code> <code class="purple__nFc">{</code><span><code>[</code><code class="blue_2Afy">any</code><code>]</code></span><code>: </code><code class="blue_2Afy">any</code><code class="purple__nFc">}</code></div><div>
+<p>A table that could contain any value indexed by any type of value</p>
+</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="Connection"><code style="text-decoration:none">Connection</code><a aria-hidden="true" class="hash-link" href="#Connection" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L320"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code class="purple__nFc">type</code> <code>Connection<!-- --> = </code> <code class="purple__nFc">(</code><code>CheckConnectionStatus<!-- -->: </code><code class="blue_2Afy">boolean</code><code class="purple__nFc">)</code><code class="purple__nFc"> → </code><code class="blue_2Afy">boolean</code></div><div>
+<p>Connection between a signal and a listener function. To disconnect it, the connection must be called like a function with no arguments</p>
+</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="Listeners"><code style="text-decoration:none">Listeners</code><a aria-hidden="true" class="hash-link" href="#Listeners" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L325"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code class="purple__nFc">type</code> <code>Listeners<!-- --> = </code> <code class="purple__nFc">{</code><span><code>[</code><code class="yellow_1WGw">(</code><code class="blue_2Afy">...any</code><code class="yellow_1WGw">)</code><code class="yellow_1WGw"> → </code><code class="yellow_1WGw">(</code><code class="blue_2Afy">...any</code><code class="yellow_1WGw">)</code><code>]</code></span><code>: </code><code class="blue_2Afy">boolean</code><code class="purple__nFc">}</code></div><div>
+<p>List of listener functions that will fire on signal events</p>
+</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="ProxyListeners"><code style="text-decoration:none">ProxyListeners</code><a aria-hidden="true" class="hash-link" href="#ProxyListeners" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L335"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code class="purple__nFc">interface</code> <code>ProxyListeners<!-- --> <!-- -->{</code><div class="inset_2cJr"><div><code>IndexListeners<!-- -->: </code><code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy#Listeners">Listeners</a></code></div><div><code>ChangeListeners<!-- -->: </code><code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy#Listeners">Listeners</a></code></div></div><code>}</code></div><div>
+<p>Listeners of a proxy</p>
+</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="ActiveListeners"><code style="text-decoration:none">ActiveListeners</code><a aria-hidden="true" class="hash-link" href="#ActiveListeners" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L340"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code class="purple__nFc">type</code> <code>ActiveListeners<!-- --> = </code> <code class="purple__nFc">{</code><span><code>[</code><code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy#table">table</a></code><code>]</code></span><code>: </code><code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy#ProxyListeners">ProxyListeners</a></code><code class="purple__nFc">}</code></div><div>
+<p>List of active listeners indexed by their parent proxy</p>
+</div><h2 class="anchor anchorWithStickyNavbar_31ik" id="properties">Properties<a aria-hidden="true" class="hash-link" href="#properties" title="Direct link to heading">​</a></h2><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="_Proxy"><code style="text-decoration:none">_Proxy</code><a aria-hidden="true" class="hash-link" href="#_Proxy" title="Direct link to heading">​</a></h3><span class="badge_3ZFo" style="color:#e74c3c"><span class="badgeTooltip_2qiw">This item is read only and cannot be modified.</span><span class="badgeToolTipTail_2yaQ"><svg xmlns="http://www.w3.org/2000/svg" height="300px" width="300px" fill="#e74c3c" x="0px" y="0px" viewBox="0 0 96 96"><path d="M70.354,15.662h-7.496H25.566c-3.282,0-5.19-0.776-5.728-1.169v-1.456c0.538-0.393,2.445-1.168,5.728-1.168h46.479V8H25.566  c-4.776,0-9.594,1.468-9.594,4.747v61.458C15.972,86.645,20.328,88,37.495,88h42.535V15.662H70.354z"></path></svg> <!-- -->Read Only</span></span><div class="repositoryDetailsContainer_1UH0"><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L37"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->.<!-- -->_Proxy<!-- -->:<!-- --> </code> <code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy#table">table</a></code></div><div>
 <p>Table that acts as the proxy. All keys will automatically be added or indexed from this table except if <code>rawset</code> or <code>rawget</code> are used</p>
-</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="_IndexedListeners"><code style="text-decoration:none">_IndexedListeners</code><a aria-hidden="true" class="hash-link" href="#_IndexedListeners" title="Direct link to heading">​</a></h3><span class="badge_3ZFo" style="color:#e74c3c"><span class="badgeTooltip_2qiw">This item is read only and cannot be modified.</span><span class="badgeToolTipTail_2yaQ"><svg xmlns="http://www.w3.org/2000/svg" height="300px" width="300px" fill="#e74c3c" x="0px" y="0px" viewBox="0 0 96 96"><path d="M70.354,15.662h-7.496H25.566c-3.282,0-5.19-0.776-5.728-1.169v-1.456c0.538-0.393,2.445-1.168,5.728-1.168h46.479V8H25.566  c-4.776,0-9.594,1.468-9.594,4.747v61.458C15.972,86.645,20.328,88,37.495,88h42.535V15.662H70.354z"></path></svg> <!-- -->Read Only</span></span><div class="repositoryDetailsContainer_1UH0"><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L40"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->.<!-- -->_IndexedListeners<!-- -->:<!-- --> </code> <code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy#Listeners">Listeners</a></code></div><div>
-<p>Table of functions that fire when a proxy's key is indexed</p>
-</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="_ChangedListeners"><code style="text-decoration:none">_ChangedListeners</code><a aria-hidden="true" class="hash-link" href="#_ChangedListeners" title="Direct link to heading">​</a></h3><span class="badge_3ZFo" style="color:#e74c3c"><span class="badgeTooltip_2qiw">This item is read only and cannot be modified.</span><span class="badgeToolTipTail_2yaQ"><svg xmlns="http://www.w3.org/2000/svg" height="300px" width="300px" fill="#e74c3c" x="0px" y="0px" viewBox="0 0 96 96"><path d="M70.354,15.662h-7.496H25.566c-3.282,0-5.19-0.776-5.728-1.169v-1.456c0.538-0.393,2.445-1.168,5.728-1.168h46.479V8H25.566  c-4.776,0-9.594,1.468-9.594,4.747v61.458C15.972,86.645,20.328,88,37.495,88h42.535V15.662H70.354z"></path></svg> <!-- -->Read Only</span></span><div class="repositoryDetailsContainer_1UH0"><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L45"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->.<!-- -->_ChangedListeners<!-- -->:<!-- --> </code> <code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy#Listeners">Listeners</a></code></div><div>
-<p>Table of functions that fire when a key is added to the proxy or changed</p>
-</div><h2 class="anchor anchorWithStickyNavbar_31ik" id="functions">Functions<a aria-hidden="true" class="hash-link" href="#functions" title="Direct link to heading">​</a></h2><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="IsProxy"><code style="text-decoration:none">IsProxy</code><a aria-hidden="true" class="hash-link" href="#IsProxy" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><span class="releaseVersion_3lep">since <!-- -->v3.1.0</span><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L204"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->.</code><code class="green_3LnD">IsProxy</code><code>(</code><code>Table<!-- -->: </code><code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy#table">table</a></code><code>) → </code><code class="blue_2Afy">boolean</code></div><div>
-<p>Checks if a given table is or not a proxy (checks its metatable)</p>
+</div><h2 class="anchor anchorWithStickyNavbar_31ik" id="functions">Functions<a aria-hidden="true" class="hash-link" href="#functions" title="Direct link to heading">​</a></h2><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="IsProxy"><code style="text-decoration:none">IsProxy</code><a aria-hidden="true" class="hash-link" href="#IsProxy" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><span class="releaseVersion_3lep">since <!-- -->v3.1.0</span><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L277"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->.</code><code class="green_3LnD">IsProxy</code><code>(</code><code>Table<!-- -->: </code><code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy#table">table</a></code><code>) → </code><code class="blue_2Afy">boolean</code></div><div>
+<p>Checks if the given table is or not a proxy (checks its metatable)</p>
 <pre class="language-lua"><code class="language-lua"><span class="token keyword">local</span> Proxy <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span>Source<span class="token punctuation">.</span>Proxy<span class="token punctuation">)</span>
 
 <span class="token keyword">local</span> NewProxy <span class="token operator">=</span> Proxy<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -106,25 +106,18 @@ Proxy<span class="token punctuation">.</span>Test <span class="token operator">=
         </svg></span>caution</h5>
   </div>
   <div class="admonition-content">
-    <p>
-      To check if a table is a proxy, you should call <code>.IsProxy()</code> using the required <a href="https://developer.roblox.com/en-us/api-reference/class/ModuleScript" target="_blank">ModuleScript</a> or
-      the function will throw out an error since the created proxy class does not contain the function
-    </p>
+    <p>A good practice is to check</p>
   </div>
 </div>
-</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="new"><code style="text-decoration:none">new</code><a aria-hidden="true" class="hash-link" href="#new" title="Direct link to heading">​</a></h3><span class="docTag_3qMS" style="border-color:#ff793f;color:#ff793f">Constructor</span><div class="repositoryDetailsContainer_1UH0"><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L219"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->.</code><code class="green_3LnD">new</code><code>(</code><div class="inset_2cJr"><div><code>Origin<!-- -->: </code><code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy#table">table?</a></code><code>,</code><span class="inlineDescription_17uy">-- <span>
-<p>Optional table to use as template for the proxy table</p>
-</span></span></div><div><code>CustomProperties<!-- -->: </code><code class="purple__nFc">{</code><span><code>[</code><code class="blue_2Afy">string</code><code>]</code></span><code>: </code><code class="blue_2Afy">any</code><code class="purple__nFc">}</code><code class="blue_2Afy">?</code><span class="inlineDescription_17uy">-- <span>
-<p>Custom properties can be added to the proxy before constructing it</p>
-</span></span></div></div><code>) → </code><code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy">Proxy</a></code></div><div>
+</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="new"><code style="text-decoration:none">new</code><a aria-hidden="true" class="hash-link" href="#new" title="Direct link to heading">​</a></h3><span class="docTag_3qMS" style="border-color:#ff793f;color:#ff793f">Constructor</span><div class="repositoryDetailsContainer_1UH0"><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L288"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->.</code><code class="green_3LnD">new</code><code>(</code><code>Origin<!-- -->: </code><code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy#table">table?</a></code><code>) → </code><code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy">Proxy</a></code></div><div>
 <p>Creates a new proxy object</p>
-</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="OnIndex"><code style="text-decoration:none">OnIndex</code><a aria-hidden="true" class="hash-link" href="#OnIndex" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><span class="releaseVersion_3lep">since <!-- -->v3.0.0</span><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L93"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->:</code><code class="green_3LnD">OnIndex</code><code>(</code><code>Callback<!-- -->: </code><code class="purple__nFc">(</code><div class="inset_2cJr"><code>Key<!-- -->: </code><code class="blue_2Afy">string?</code><code class="purple__nFc">,</code></div><div class="inset_2cJr"><code>Value<!-- -->: </code><code class="blue_2Afy">any?</code><code class="purple__nFc">,</code></div><div class="inset_2cJr"><code>Proxy<!-- -->: </code><code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy">Proxy?</a></code></div><code class="purple__nFc">)</code><code class="purple__nFc"> → </code><code class="purple__nFc">(</code><code class="purple__nFc">)</code><code>) → </code><code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy#Connection">Connection</a></code></div><div>
+</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="OnIndex"><code style="text-decoration:none">OnIndex</code><a aria-hidden="true" class="hash-link" href="#OnIndex" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><span class="releaseVersion_3lep">since <!-- -->v3.0.0</span><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L104"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->:</code><code class="green_3LnD">OnIndex</code><code>(</code><code>) → </code><code>(</code><code>)</code></div><div>
 <p>Connects passed callback to a signal that fires when a key is indexed</p>
-</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="OnChange"><code style="text-decoration:none">OnChange</code><a aria-hidden="true" class="hash-link" href="#OnChange" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><span class="releaseVersion_3lep">since <!-- -->v3.0.0</span><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L108"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->:</code><code class="green_3LnD">OnChange</code><code>(</code><code>Callback<!-- -->: </code><code class="purple__nFc">(</code><div class="inset_2cJr"><code>Key<!-- -->: </code><code class="blue_2Afy">string?</code><code class="purple__nFc">,</code></div><div class="inset_2cJr"><code>Value<!-- -->: </code><code class="blue_2Afy">any?</code><code class="purple__nFc">,</code></div><div class="inset_2cJr"><code>OldValue<!-- -->: </code><code class="blue_2Afy">any?</code><code class="purple__nFc">,</code></div><div class="inset_2cJr"><code>Proxy<!-- -->: </code><code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy">Proxy?</a></code></div><code class="purple__nFc">)</code><code class="purple__nFc"> → </code><code class="purple__nFc">(</code><code class="purple__nFc">)</code><code>) → </code><code class="blue_2Afy"><a style="text-decoration:underline;color:inherit" href="/Proxy/api/Proxy#Connection">Connection</a></code></div><div>
-<p>Connects passed callback to a signal that fires when a key is added or changed</p>
-</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="Destroy"><code style="text-decoration:none">Destroy</code><a aria-hidden="true" class="hash-link" href="#Destroy" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L120"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->:</code><code class="green_3LnD">Destroy</code><code>(</code><code>) → </code><code class="blue_2Afy">nil</code></div><div>
+</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="OnChange"><code style="text-decoration:none">OnChange</code><a aria-hidden="true" class="hash-link" href="#OnChange" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><span class="releaseVersion_3lep">since <!-- -->v3.0.0</span><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L116"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->:</code><code class="green_3LnD">OnChange</code><code>(</code><code>) → </code><code>(</code><code>)</code></div><div>
+<p>Connects passed function to a signal that listens to key additions or changes</p>
+</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="Destroy"><code style="text-decoration:none">Destroy</code><a aria-hidden="true" class="hash-link" href="#Destroy" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L127"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->:</code><code class="green_3LnD">Destroy</code><code>(</code><code>) → </code><code>(</code><code>)</code></div><div>
 <p>Destroys the proxy and disconnects all listeners</p>
-</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="Get"><code style="text-decoration:none">Get</code><a aria-hidden="true" class="hash-link" href="#Get" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><span class="releaseVersion_3lep">since <!-- -->v3.0.0</span><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L149"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->:</code><code class="green_3LnD">Get</code><code>(</code><code>Key<!-- -->: </code><code class="blue_2Afy">string</code><code>) → </code><code class="blue_2Afy">any</code></div><div>
+</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="Get"><code style="text-decoration:none">Get</code><a aria-hidden="true" class="hash-link" href="#Get" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><span class="releaseVersion_3lep">since <!-- -->v3.0.0</span><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L221"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->:</code><code class="green_3LnD">Get</code><code>(</code><code>) → </code><code>(</code><code>)</code></div><div>
 <p>Specifically looks for the desired key inside the proxy table.</p>
 <pre class="language-lua"><code class="language-lua"><span class="token function">print</span><span class="token punctuation">(</span>Proxy<span class="token punctuation">.</span>_Proxy<span class="token punctuation">)</span>        <span class="token comment">-- Outputs: {}</span>
 <span class="token function">print</span><span class="token punctuation">(</span>Proxy<span class="token punctuation">:</span><span class="token function">Get</span><span class="token punctuation">(</span><span class="token string">"_Proxy"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">-- Outputs: nil</span>
@@ -139,12 +132,10 @@ Proxy<span class="token punctuation">.</span>Test <span class="token operator">=
         </svg></span>info</h5>
   </div>
   <div class="admonition-content">
-    <p>Use this in case the proxy object has a property that is also a key inside the proxy table</p>
+    <p>Use this in case the proxy object has a property that also is a key inside the proxy table</p>
   </div>
 </div>
-</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="Set"><code style="text-decoration:none">Set</code><a aria-hidden="true" class="hash-link" href="#Set" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><span class="releaseVersion_3lep">since <!-- -->v3.0.0</span><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L177"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->:</code><code class="green_3LnD">Set</code><code>(</code><div class="inset_2cJr"><div><code>Key<!-- -->: </code><code class="blue_2Afy">string</code><code>,</code></div><div><code>Value<!-- -->: </code><code class="blue_2Afy">any</code></div></div><code>) → </code><code class="blue_2Afy">any</code><span class="inlineDescription_17uy">-- <span>
-<p>Returns the value that was initially passed</p>
-</span></span></div><div>
+</div><div class="divider_3z1R"></div><h3 class="anchor anchorWithStickyNavbar_31ik" id="Set"><code style="text-decoration:none">Set</code><a aria-hidden="true" class="hash-link" href="#Set" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_1UH0"><span class="releaseVersion_3lep">since <!-- -->v3.0.0</span><a class="sourceButton_2aE5" href="https://github.com/flamenco687/Proxy/blob/master/src/init.lua#L245"><div class="sourceButtonText_monK">&lt;/&gt;</div></a></div><div class="memberString_P8-X"><code>Proxy<!-- -->:</code><code class="green_3LnD">Set</code><code>(</code><code>) → </code><code>(</code><code>)</code></div><div>
 <p>Specifically sets the value for the desired key inside the proxy table.</p>
 <pre class="language-lua"><code class="language-lua">Proxy<span class="token punctuation">:</span><span class="token function">Set</span><span class="token punctuation">(</span><span class="token string">"_Proxy"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>
 
@@ -160,83 +151,58 @@ Proxy<span class="token punctuation">.</span>Test <span class="token operator">=
         </svg></span>info</h5>
   </div>
   <div class="admonition-content">
-    <p>Use this in case the proxy object has a property that is also a key inside the proxy table</p>
+    <p>Use this in case the proxy object should have a key inside the proxy table that also is a proxy property</p>
   </div>
 </div>
 </div></div></article></div><details><summary>Show raw api</summary><pre style="max-width:100%;white-space:pre-wrap">{
     &quot;functions&quot;: [
         {
             &quot;name&quot;: &quot;ListenToDisconnection&quot;,
-            &quot;desc&quot;: &quot;Returns a callback function that must be called to disconnect a listeners&quot;,
-            &quot;params&quot;: [
-                {
-                    &quot;name&quot;: &quot;Callback&quot;,
-                    &quot;desc&quot;: &quot;&quot;,
-                    &quot;lua_type&quot;: &quot;(...any?) -&gt; ()&quot;
-                },
-                {
-                    &quot;name&quot;: &quot;Source&quot;,
-                    &quot;desc&quot;: &quot;Where to store active callbacks&quot;,
-                    &quot;lua_type&quot;: &quot;table&quot;
-                }
-            ],
-            &quot;returns&quot;: [
-                {
-                    &quot;desc&quot;: &quot;&quot;,
-                    &quot;lua_type&quot;: &quot;(CheckConnectionStatus: boolean) -&gt; ()&quot;
-                }
-            ],
+            &quot;desc&quot;: &quot;Returns a connection that must be called to disconnect a listener function&quot;,
+            &quot;params&quot;: [],
+            &quot;returns&quot;: [],
             &quot;function_type&quot;: &quot;static&quot;,
             &quot;since&quot;: &quot;v3.0.0&quot;,
             &quot;private&quot;: true,
             &quot;source&quot;: {
-                &quot;line&quot;: 60,
+                &quot;line&quot;: 49,
+                &quot;path&quot;: &quot;src/init.lua&quot;
+            }
+        },
+        {
+            &quot;name&quot;: &quot;FireListeners&quot;,
+            &quot;desc&quot;: &quot;Fires all the listeners from the specified source along with the passed arguments&quot;,
+            &quot;params&quot;: [],
+            &quot;returns&quot;: [],
+            &quot;function_type&quot;: &quot;static&quot;,
+            &quot;since&quot;: &quot;v3.0.0&quot;,
+            &quot;private&quot;: true,
+            &quot;source&quot;: {
+                &quot;line&quot;: 89,
                 &quot;path&quot;: &quot;src/init.lua&quot;
             }
         },
         {
             &quot;name&quot;: &quot;OnIndex&quot;,
             &quot;desc&quot;: &quot;Connects passed callback to a signal that fires when a key is indexed&quot;,
-            &quot;params&quot;: [
-                {
-                    &quot;name&quot;: &quot;Callback&quot;,
-                    &quot;desc&quot;: &quot;&quot;,
-                    &quot;lua_type&quot;: &quot;(Key: string?, Value: any?, Proxy: Proxy?) -&gt; ()&quot;
-                }
-            ],
-            &quot;returns&quot;: [
-                {
-                    &quot;desc&quot;: &quot;&quot;,
-                    &quot;lua_type&quot;: &quot;Connection&quot;
-                }
-            ],
+            &quot;params&quot;: [],
+            &quot;returns&quot;: [],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;since&quot;: &quot;v3.0.0&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 93,
+                &quot;line&quot;: 104,
                 &quot;path&quot;: &quot;src/init.lua&quot;
             }
         },
         {
             &quot;name&quot;: &quot;OnChange&quot;,
-            &quot;desc&quot;: &quot;Connects passed callback to a signal that fires when a key is added or changed&quot;,
-            &quot;params&quot;: [
-                {
-                    &quot;name&quot;: &quot;Callback&quot;,
-                    &quot;desc&quot;: &quot;&quot;,
-                    &quot;lua_type&quot;: &quot;(Key: string?, Value: any?, OldValue: any?, Proxy: Proxy?) -&gt; ()&quot;
-                }
-            ],
-            &quot;returns&quot;: [
-                {
-                    &quot;desc&quot;: &quot;&quot;,
-                    &quot;lua_type&quot;: &quot;Connection&quot;
-                }
-            ],
+            &quot;desc&quot;: &quot;Connects passed function to a signal that listens to key additions or changes&quot;,
+            &quot;params&quot;: [],
+            &quot;returns&quot;: [],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;since&quot;: &quot;v3.0.0&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 108,
+                &quot;line&quot;: 116,
                 &quot;path&quot;: &quot;src/init.lua&quot;
             }
         },
@@ -244,22 +210,22 @@ Proxy<span class="token punctuation">.</span>Test <span class="token operator">=
             &quot;name&quot;: &quot;Destroy&quot;,
             &quot;desc&quot;: &quot;Destroys the proxy and disconnects all listeners&quot;,
             &quot;params&quot;: [],
-            &quot;returns&quot;: [
-                {
-                    &quot;desc&quot;: &quot;&quot;,
-                    &quot;lua_type&quot;: &quot;nil&quot;
-                }
-            ],
+            &quot;returns&quot;: [],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 120,
+                &quot;line&quot;: 127,
                 &quot;path&quot;: &quot;src/init.lua&quot;
             }
         },
         {
-            &quot;name&quot;: &quot;Get&quot;,
-            &quot;desc&quot;: &quot;Specifically looks for the desired key inside the proxy table.\n\n```lua\nprint(Proxy._Proxy)        -- Outputs: {}\nprint(Proxy:Get(\&quot;_Proxy\&quot;)) -- Outputs: nil\n\n-- Proxy._Proxy is the proxy table, since it is empty it returns an empty table\n-- Proxy:Get(\&quot;_Proxy\&quot;) is actually looking for Proxy._Proxy[\&quot;_Proxy\&quot;], which is nil\n```\n\n:::info\nUse this in case the proxy object has a property that is also a key inside the proxy table&quot;,
+            &quot;name&quot;: &quot;Index&quot;,
+            &quot;desc&quot;: &quot;Fires index listeners and returns the requested key&#x27;s value\n\n:::note Class members can also be indexed\nProxy properties or methods can be returned when indexing them. To only set\nor get actual values from the proxy table, use [Proxy:Set] and [Proxy:Get]&quot;,
             &quot;params&quot;: [
+                {
+                    &quot;name&quot;: &quot;self&quot;,
+                    &quot;desc&quot;: &quot;&quot;,
+                    &quot;lua_type&quot;: &quot;Proxy&quot;
+                },
                 {
                     &quot;name&quot;: &quot;Key&quot;,
                     &quot;desc&quot;: &quot;&quot;,
@@ -269,20 +235,26 @@ Proxy<span class="token punctuation">.</span>Test <span class="token operator">=
             &quot;returns&quot;: [
                 {
                     &quot;desc&quot;: &quot;&quot;,
-                    &quot;lua_type&quot;: &quot;any&quot;
+                    &quot;lua_type&quot;: &quot;any\r\n&quot;
                 }
             ],
-            &quot;function_type&quot;: &quot;method&quot;,
-            &quot;since&quot;: &quot;v3.0.0&quot;,
+            &quot;function_type&quot;: &quot;static&quot;,
+            &quot;since&quot;: &quot;v3.1.3&quot;,
+            &quot;private&quot;: true,
             &quot;source&quot;: {
-                &quot;line&quot;: 149,
+                &quot;line&quot;: 160,
                 &quot;path&quot;: &quot;src/init.lua&quot;
             }
         },
         {
-            &quot;name&quot;: &quot;Set&quot;,
-            &quot;desc&quot;: &quot;Specifically sets the value for the desired key inside the proxy table.\n\n```lua\nProxy:Set(\&quot;_Proxy\&quot;, 10)\n\nprint(Proxy._Proxy)        -- Outputs: { _Proxy = 10 }\nprint(Proxy:Get(\&quot;_Proxy\&quot;)) -- Outputs: 10\n\n-- :Set() will only modify values inside Proxy._Proxy\n```\n\n:::info\nUse this in case the proxy object has a property that is also a key inside the proxy table&quot;,
+            &quot;name&quot;: &quot;NewIndex&quot;,
+            &quot;desc&quot;: &quot;Fires change listeners. Change listeners will only fire if the updated value\ndiffers from its last value\n\n:::tip Child proxies are automatically cleaned up\nWhen a key&#x27;s value is changed, if the old value is a proxy object, it will automatically\nget cleaned up using [Proxy:Destroy]&quot;,
             &quot;params&quot;: [
+                {
+                    &quot;name&quot;: &quot;self&quot;,
+                    &quot;desc&quot;: &quot;&quot;,
+                    &quot;lua_type&quot;: &quot;Proxy&quot;
+                },
                 {
                     &quot;name&quot;: &quot;Key&quot;,
                     &quot;desc&quot;: &quot;&quot;,
@@ -294,22 +266,42 @@ Proxy<span class="token punctuation">.</span>Test <span class="token operator">=
                     &quot;lua_type&quot;: &quot;any&quot;
                 }
             ],
-            &quot;returns&quot;: [
-                {
-                    &quot;desc&quot;: &quot;Returns the value that was initially passed&quot;,
-                    &quot;lua_type&quot;: &quot;any&quot;
-                }
-            ],
+            &quot;returns&quot;: [],
+            &quot;function_type&quot;: &quot;static&quot;,
+            &quot;since&quot;: &quot;v3.1.3&quot;,
+            &quot;private&quot;: true,
+            &quot;source&quot;: {
+                &quot;line&quot;: 185,
+                &quot;path&quot;: &quot;src/init.lua&quot;
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Get&quot;,
+            &quot;desc&quot;: &quot;Specifically looks for the desired key inside the proxy table.\n\n```lua\nprint(Proxy._Proxy)        -- Outputs: {}\nprint(Proxy:Get(\&quot;_Proxy\&quot;)) -- Outputs: nil\n\n-- Proxy._Proxy is the proxy table, since it is empty it returns an empty table\n-- Proxy:Get(\&quot;_Proxy\&quot;) is actually looking for Proxy._Proxy[\&quot;_Proxy\&quot;], which is nil\n```\n\n:::info\nUse this in case the proxy object has a property that also is a key inside the proxy table&quot;,
+            &quot;params&quot;: [],
+            &quot;returns&quot;: [],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;since&quot;: &quot;v3.0.0&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 177,
+                &quot;line&quot;: 221,
+                &quot;path&quot;: &quot;src/init.lua&quot;
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Set&quot;,
+            &quot;desc&quot;: &quot;Specifically sets the value for the desired key inside the proxy table.\n\n```lua\nProxy:Set(\&quot;_Proxy\&quot;, 10)\n\nprint(Proxy._Proxy)        -- Outputs: { _Proxy = 10 }\nprint(Proxy:Get(\&quot;_Proxy\&quot;)) -- Outputs: 10\n\n-- :Set() will only modify values inside Proxy._Proxy\n```\n\n:::info\nUse this in case the proxy object should have a key inside the proxy table that also is a proxy property&quot;,
+            &quot;params&quot;: [],
+            &quot;returns&quot;: [],
+            &quot;function_type&quot;: &quot;method&quot;,
+            &quot;since&quot;: &quot;v3.0.0&quot;,
+            &quot;source&quot;: {
+                &quot;line&quot;: 245,
                 &quot;path&quot;: &quot;src/init.lua&quot;
             }
         },
         {
             &quot;name&quot;: &quot;IsProxy&quot;,
-            &quot;desc&quot;: &quot;Checks if a given table is or not a proxy (checks its metatable)\n```lua\nlocal Proxy = require(Source.Proxy)\n\nlocal NewProxy = Proxy.new()\n\nprint(Proxy.IsProxy(NewProxy)) -- Output: true\nprint(Proxy.IsProxy({}))       -- Output: false\n```\n\n:::caution\nTo check if a table is a proxy, you should call `.IsProxy()` using the required [ModuleScript] or\nthe function will throw out an error since the created proxy class does not contain the function&quot;,
+            &quot;desc&quot;: &quot;Checks if the given table is or not a proxy (checks its metatable)\n```lua\nlocal Proxy = require(Source.Proxy)\n\nlocal NewProxy = Proxy.new()\n\nprint(Proxy.IsProxy(NewProxy)) -- Output: true\nprint(Proxy.IsProxy({}))       -- Output: false\n```\n\n:::caution\nA good practice is to check&quot;,
             &quot;params&quot;: [
                 {
                     &quot;name&quot;: &quot;Table&quot;,
@@ -320,13 +312,13 @@ Proxy<span class="token punctuation">.</span>Test <span class="token operator">=
             &quot;returns&quot;: [
                 {
                     &quot;desc&quot;: &quot;&quot;,
-                    &quot;lua_type&quot;: &quot;boolean&quot;
+                    &quot;lua_type&quot;: &quot;boolean\r\n&quot;
                 }
             ],
             &quot;function_type&quot;: &quot;static&quot;,
             &quot;since&quot;: &quot;v3.1.0&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 204,
+                &quot;line&quot;: 277,
                 &quot;path&quot;: &quot;src/init.lua&quot;
             }
         },
@@ -336,19 +328,14 @@ Proxy<span class="token punctuation">.</span>Test <span class="token operator">=
             &quot;params&quot;: [
                 {
                     &quot;name&quot;: &quot;Origin&quot;,
-                    &quot;desc&quot;: &quot;Optional table to use as template for the proxy table&quot;,
+                    &quot;desc&quot;: &quot;&quot;,
                     &quot;lua_type&quot;: &quot;table?&quot;
-                },
-                {
-                    &quot;name&quot;: &quot;CustomProperties&quot;,
-                    &quot;desc&quot;: &quot;Custom properties can be added to the proxy before constructing it&quot;,
-                    &quot;lua_type&quot;: &quot;{[string]: any}?&quot;
                 }
             ],
             &quot;returns&quot;: [
                 {
                     &quot;desc&quot;: &quot;&quot;,
-                    &quot;lua_type&quot;: &quot;Proxy&quot;
+                    &quot;lua_type&quot;: &quot;Proxy\r\n&quot;
                 }
             ],
             &quot;function_type&quot;: &quot;static&quot;,
@@ -356,93 +343,7 @@ Proxy<span class="token punctuation">.</span>Test <span class="token operator">=
                 &quot;Constructor&quot;
             ],
             &quot;source&quot;: {
-                &quot;line&quot;: 219,
-                &quot;path&quot;: &quot;src/init.lua&quot;
-            }
-        },
-        {
-            &quot;name&quot;: &quot;FireListeners&quot;,
-            &quot;desc&quot;: &quot;Fires all the listeners from the specified source along with the passed arguments&quot;,
-            &quot;params&quot;: [
-                {
-                    &quot;name&quot;: &quot;Source&quot;,
-                    &quot;desc&quot;: &quot;&quot;,
-                    &quot;lua_type&quot;: &quot;Listeners&quot;
-                },
-                {
-                    &quot;name&quot;: &quot;...&quot;,
-                    &quot;desc&quot;: &quot;These are the arguments passed to the callback&quot;,
-                    &quot;lua_type&quot;: &quot;any&quot;
-                }
-            ],
-            &quot;returns&quot;: [
-                {
-                    &quot;desc&quot;: &quot;&quot;,
-                    &quot;lua_type&quot;: &quot;nil&quot;
-                }
-            ],
-            &quot;function_type&quot;: &quot;static&quot;,
-            &quot;since&quot;: &quot;v3.0.0&quot;,
-            &quot;private&quot;: true,
-            &quot;source&quot;: {
-                &quot;line&quot;: 260,
-                &quot;path&quot;: &quot;src/init.lua&quot;
-            }
-        },
-        {
-            &quot;name&quot;: &quot;__index&quot;,
-            &quot;desc&quot;: &quot;Fires index listeners and returns the key&#x27;s value\n\n:::note Class members can also be indexed\nProxy&#x27;s properties or methods can be returned when indexing them. To only get\nor set actual values from the proxy table, use the [Proxy:Set] and [Proxy:Get] methods&quot;,
-            &quot;params&quot;: [
-                {
-                    &quot;name&quot;: &quot;Key&quot;,
-                    &quot;desc&quot;: &quot;&quot;,
-                    &quot;lua_type&quot;: &quot;string&quot;
-                }
-            ],
-            &quot;returns&quot;: [
-                {
-                    &quot;desc&quot;: &quot;&quot;,
-                    &quot;lua_type&quot;: &quot;any&quot;
-                }
-            ],
-            &quot;function_type&quot;: &quot;method&quot;,
-            &quot;tags&quot;: [
-                &quot;Metamethod&quot;
-            ],
-            &quot;private&quot;: true,
-            &quot;source&quot;: {
-                &quot;line&quot;: 279,
-                &quot;path&quot;: &quot;src/init.lua&quot;
-            }
-        },
-        {
-            &quot;name&quot;: &quot;__newindex&quot;,
-            &quot;desc&quot;: &quot;Fires change listeners. Change listeners will only fire if the updated value\ndiffers from its last version\n\n:::tip Child proxies are automatically cleaned up\nWhen a key&#x27;s value is changed, if the old value is a proxy object, it will automatically\nbe destroyed using the `Destroy` method&quot;,
-            &quot;params&quot;: [
-                {
-                    &quot;name&quot;: &quot;Key&quot;,
-                    &quot;desc&quot;: &quot;&quot;,
-                    &quot;lua_type&quot;: &quot;string&quot;
-                },
-                {
-                    &quot;name&quot;: &quot;Value&quot;,
-                    &quot;desc&quot;: &quot;&quot;,
-                    &quot;lua_type&quot;: &quot;any&quot;
-                }
-            ],
-            &quot;returns&quot;: [
-                {
-                    &quot;desc&quot;: &quot;&quot;,
-                    &quot;lua_type&quot;: &quot;nil&quot;
-                }
-            ],
-            &quot;function_type&quot;: &quot;method&quot;,
-            &quot;tags&quot;: [
-                &quot;Metamethod&quot;
-            ],
-            &quot;private&quot;: true,
-            &quot;source&quot;: {
-                &quot;line&quot;: 306,
+                &quot;line&quot;: 288,
                 &quot;path&quot;: &quot;src/init.lua&quot;
             }
         }
@@ -454,27 +355,7 @@ Proxy<span class="token punctuation">.</span>Test <span class="token operator">=
             &quot;lua_type&quot;: &quot;table&quot;,
             &quot;readonly&quot;: true,
             &quot;source&quot;: {
-                &quot;line&quot;: 35,
-                &quot;path&quot;: &quot;src/init.lua&quot;
-            }
-        },
-        {
-            &quot;name&quot;: &quot;_IndexedListeners&quot;,
-            &quot;desc&quot;: &quot;Table of functions that fire when a proxy&#x27;s key is indexed&quot;,
-            &quot;lua_type&quot;: &quot;Listeners&quot;,
-            &quot;readonly&quot;: true,
-            &quot;source&quot;: {
-                &quot;line&quot;: 40,
-                &quot;path&quot;: &quot;src/init.lua&quot;
-            }
-        },
-        {
-            &quot;name&quot;: &quot;_ChangedListeners&quot;,
-            &quot;desc&quot;: &quot;Table of functions that fire when a key is added to the proxy or changed&quot;,
-            &quot;lua_type&quot;: &quot;Listeners&quot;,
-            &quot;readonly&quot;: true,
-            &quot;source&quot;: {
-                &quot;line&quot;: 45,
+                &quot;line&quot;: 37,
                 &quot;path&quot;: &quot;src/init.lua&quot;
             }
         }
@@ -482,40 +363,69 @@ Proxy<span class="token punctuation">.</span>Test <span class="token operator">=
     &quot;types&quot;: [
         {
             &quot;name&quot;: &quot;table&quot;,
-            &quot;desc&quot;: &quot;Represents a table that could contain any value indexed by anything&quot;,
+            &quot;desc&quot;: &quot;A table that could contain any value indexed by any type of value&quot;,
             &quot;lua_type&quot;: &quot;{[any]: any}&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 324,
+                &quot;line&quot;: 315,
                 &quot;path&quot;: &quot;src/init.lua&quot;
             }
         },
         {
             &quot;name&quot;: &quot;Connection&quot;,
-            &quot;desc&quot;: &quot;Represents a connection between a callback and a listener. To disconnect it, the function must be called&quot;,
+            &quot;desc&quot;: &quot;Connection between a signal and a listener function. To disconnect it, the connection must be called like a function with no arguments&quot;,
             &quot;lua_type&quot;: &quot;(CheckConnectionStatus: boolean) -&gt; boolean&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 329,
+                &quot;line&quot;: 320,
                 &quot;path&quot;: &quot;src/init.lua&quot;
             }
         },
         {
             &quot;name&quot;: &quot;Listeners&quot;,
-            &quot;desc&quot;: &quot;Represents a list of callbacks that will listen to changes of the desired property, table, etc...&quot;,
+            &quot;desc&quot;: &quot;List of listener functions that will fire on signal events&quot;,
             &quot;lua_type&quot;: &quot;{[(...any) -&gt; (...any)]: boolean}&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 334,
+                &quot;line&quot;: 325,
+                &quot;path&quot;: &quot;src/init.lua&quot;
+            }
+        },
+        {
+            &quot;name&quot;: &quot;ProxyListeners&quot;,
+            &quot;desc&quot;: &quot;Listeners of a proxy&quot;,
+            &quot;fields&quot;: [
+                {
+                    &quot;name&quot;: &quot;IndexListeners&quot;,
+                    &quot;lua_type&quot;: &quot;Listeners&quot;,
+                    &quot;desc&quot;: &quot;&quot;
+                },
+                {
+                    &quot;name&quot;: &quot;ChangeListeners&quot;,
+                    &quot;lua_type&quot;: &quot;Listeners&quot;,
+                    &quot;desc&quot;: &quot;&quot;
+                }
+            ],
+            &quot;source&quot;: {
+                &quot;line&quot;: 335,
+                &quot;path&quot;: &quot;src/init.lua&quot;
+            }
+        },
+        {
+            &quot;name&quot;: &quot;ActiveListeners&quot;,
+            &quot;desc&quot;: &quot;List of active listeners indexed by their parent proxy&quot;,
+            &quot;lua_type&quot;: &quot;{[table]: ProxyListeners}&quot;,
+            &quot;source&quot;: {
+                &quot;line&quot;: 340,
                 &quot;path&quot;: &quot;src/init.lua&quot;
             }
         }
     ],
     &quot;name&quot;: &quot;Proxy&quot;,
-    &quot;desc&quot;: &quot;Class designed to work as a proxy table. Functions can be connected to listen for\nkey indexing or key changes/additions\n\n```lua\nlocal Proxy = Proxy.new()\n\nProxy:OnIndex(function(Key: string, Value: any) --! Will not fire when the key changes\n    print(\&quot;Indexed -&gt;\&quot;, Key, Value)\nend)\n\nlocal Disconnect = Proxy:OnChange(function(Key: string, Value: any, OldValue: any)\n    print(\&quot;Changed -&gt;\&quot;, Key, Value, OldValue)\nend)\n\nProxy.Test = 10 -- Output: Changed -&gt; Test 10 nil\n\nprint(Proxy.Test) -- 1st Output: Indexed -&gt; Test 10\n                  -- 2nd Output: 10\n\nDisconnect() -- The connection gets disconnected by just calling it, magic!\n\nProxy.Test = 50 -- Nothing prints out\n```&quot;,
+    &quot;desc&quot;: &quot;Class designed to work as a proxy table. Functions can be connected to listen for\nkey indexing or key changes/additions\n\n```lua\nlocal Proxy = Proxy.new()\n\nProxy:OnIndex(function(Key: string, Value: any) -- Will not fire when the key changes\n    print(\&quot;Indexed -&gt;\&quot;, Key, Value)\nend)\n\nlocal Disconnect = Proxy:OnChange(function(Key: string, Value: any, OldValue: any)\n    print(\&quot;Changed -&gt;\&quot;, Key, Value, OldValue)\nend)\n\nProxy.Test = 10 -- Output: Changed -&gt; Test 10 nil\n\nprint(Proxy.Test) -- 1st Output: Indexed -&gt; Test 10\n                  -- 2nd Output: 10\n\nDisconnect() -- The connection gets disconnected by just calling it, magic!\n\nProxy.Test = 50 -- Nothing prints out\n```&quot;,
     &quot;source&quot;: {
-        &quot;line&quot;: 28,
+        &quot;line&quot;: 30,
         &quot;path&quot;: &quot;src/init.lua&quot;
     }
-}</pre></details></div><div class="col col--3"><div class="tableOfContents_35-E thin-scrollbar"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#types" class="table-of-contents__link toc-highlight">Types</a><ul><li><a href="#Connection" class="table-of-contents__link toc-highlight">Connection</a></li><li><a href="#Listeners" class="table-of-contents__link toc-highlight">Listeners</a></li><li><a href="#table" class="table-of-contents__link toc-highlight">table</a></li></ul></li><li><a href="#properties" class="table-of-contents__link toc-highlight">Properties</a><ul><li><a href="#_ChangedListeners" class="table-of-contents__link toc-highlight">_ChangedListeners</a></li><li><a href="#_IndexedListeners" class="table-of-contents__link toc-highlight">_IndexedListeners</a></li><li><a href="#_Proxy" class="table-of-contents__link toc-highlight">_Proxy</a></li></ul></li><li><a href="#functions" class="table-of-contents__link toc-highlight">Functions</a><ul><li><a href="#Destroy" class="table-of-contents__link toc-highlight">:Destroy</a></li><li><a href="#Get" class="table-of-contents__link toc-highlight">:Get</a></li><li><a href="#OnChange" class="table-of-contents__link toc-highlight">:OnChange</a></li><li><a href="#OnIndex" class="table-of-contents__link toc-highlight">:OnIndex</a></li><li><a href="#Set" class="table-of-contents__link toc-highlight">:Set</a></li><li><a href="#IsProxy" class="table-of-contents__link toc-highlight">.IsProxy</a></li><li><a href="#new" class="table-of-contents__link toc-highlight">.new</a></li></ul></li></ul></div></div></div></div></main></div></div><footer class="footer footer--dark"><div class="container"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2022 flamenco687. Built with Moonwave and Docusaurus.</div></div></div></footer></div>
-<script src="/Proxy/assets/js/runtime~main.54e87518.js"></script>
-<script src="/Proxy/assets/js/main.7bd282e4.js"></script>
+}</pre></details></div><div class="col col--3"><div class="tableOfContents_35-E thin-scrollbar"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#types" class="table-of-contents__link toc-highlight">Types</a><ul><li><a href="#ActiveListeners" class="table-of-contents__link toc-highlight">ActiveListeners</a></li><li><a href="#Connection" class="table-of-contents__link toc-highlight">Connection</a></li><li><a href="#Listeners" class="table-of-contents__link toc-highlight">Listeners</a></li><li><a href="#ProxyListeners" class="table-of-contents__link toc-highlight">ProxyListeners</a></li><li><a href="#table" class="table-of-contents__link toc-highlight">table</a></li></ul></li><li><a href="#properties" class="table-of-contents__link toc-highlight">Properties</a><ul><li><a href="#_Proxy" class="table-of-contents__link toc-highlight">_Proxy</a></li></ul></li><li><a href="#functions" class="table-of-contents__link toc-highlight">Functions</a><ul><li><a href="#Destroy" class="table-of-contents__link toc-highlight">:Destroy</a></li><li><a href="#Get" class="table-of-contents__link toc-highlight">:Get</a></li><li><a href="#OnChange" class="table-of-contents__link toc-highlight">:OnChange</a></li><li><a href="#OnIndex" class="table-of-contents__link toc-highlight">:OnIndex</a></li><li><a href="#Set" class="table-of-contents__link toc-highlight">:Set</a></li><li><a href="#IsProxy" class="table-of-contents__link toc-highlight">.IsProxy</a></li><li><a href="#new" class="table-of-contents__link toc-highlight">.new</a></li></ul></li></ul></div></div></div></div></main></div></div><footer class="footer footer--dark"><div class="container"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2022 flamenco687. Built with Moonwave and Docusaurus.</div></div></div></footer></div>
+<script src="/Proxy/assets/js/runtime~main.bb8c1c7f.js"></script>
+<script src="/Proxy/assets/js/main.aa867811.js"></script>
 </body>
 </html>
