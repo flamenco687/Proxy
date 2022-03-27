@@ -1,8 +1,8 @@
 [package]
 name = "flamenco687/roblox-proxy"
-description = "Roblox library to detect changes in vanilla tables"
+description = "Roblox library to detect changes in vanilla tables | https://flamenco687.github.io/Proxy/"
 
-version = "3.1.2"
+version = "3.1.3"
 license = "MIT License"
 
 authors = ["flamenco687"]

@@ -1,3 +1,25 @@
+## v3.1.3 - 2022-20-01
+
+### Removed
+- Removed the ability to specify custom properties on proxy creation. `rawset()` should be used instead after its creation
+
+### Improvements
+- Moved proxy methods and listeners to a separate table that doesn't collide with possible proxy keys
+- Improved documentation
+
+### Changes
+- `.IsProxy()` is now used to check if a removed table from a proxy is also a proxy that should be automatically destroyed
+
+### Fixed
+- Fix listeners not being triggered by `:Get()` and `:Set()` methods
+- Fix `:Destroy()` not cleaning up connections on removal
+- Fix Proxy type not showing correctly its methods
+- Fix connections not getting disconnected
+- Fix connections not getting cleaned up when destroying the proxy object
+- Fix connections not representing their current state accordingly when passing the first argument
+
+---
+
 ## v3.1.2 - 2022-20-01
 
 ### Fixed
