@@ -1,3 +1,5 @@
+local SettingsPerProxy: {[Proxy]: Settings} = {}
+local ParentsPerProxy: {[Proxy]: Proxy} = {}
 local ActiveListeners: ActiveListeners = {}
 
 --[=[
@@ -86,7 +88,7 @@ end
     @function FireListeners
     @within Proxy
 ]=]
-local function FireListeners(Source: Listeners, ...: any)
+local function FireListeners(self: Proxy, Source: Listeners, ...: any)
     for Callback: (...any) -> (...any) in pairs(Source) do
         task.spawn(Callback, ...)
     end
@@ -137,6 +139,8 @@ function Destroy(self: Proxy): nil
         ActiveListeners[self] = nil
     end
 
+    SettingsPerProxy[self] = nil
+
     setmetatable(self, nil)
     self = nil
 
@@ -161,7 +165,7 @@ local function Index(self: Proxy, Key: string): any
     local Value: any = self._Proxy[Key]
 
     if Key ~= nil and Value ~= nil then -- Otherwise, index listeners will get fired while destroying the proxy
-        FireListeners(ActiveListeners[self].IndexListeners, Key, Value, self)
+        FireListeners(self, ActiveListeners[self].IndexListeners, Key, Value, self)
     end
 
 	return Value
@@ -190,10 +194,15 @@ local function NewIndex(self: Proxy, Key: string, Value: any)
             CurrentValue:Destroy()
         end
 
+        if type(Value) == "table" and Proxy.IsProxy(Value) and SettingsPerProxy[self].TrackChildren then
+            SettingsPerProxy[Value].TrackChildren = true
+            ParentsPerProxy[Value] = self
+        end
+
         self._Proxy[Key] = Value
 
         if Key ~= nil and Value ~= nil then -- Otherwise, index listeners will get fired while destroying the proxy
-            FireListeners(ActiveListeners[self].ChangeListeners, Key, Value, CurrentValue, self)
+            FireListeners(self, ActiveListeners[self].ChangeListeners, Key, Value, CurrentValue, self)
         end
 	end
 end
@@ -285,13 +294,15 @@ end
 
     @within Proxy
 ]=]
-function Proxy.new(Origin: table?): Proxy
+function Proxy.new(Origin: table?, Settings: Settings): Proxy
 	local self = { _Proxy = if Origin then Origin else {} }
 
     ActiveListeners[self] = {
         IndexListeners = {},
         ChangeListeners = {},
     }
+
+    SettingsPerProxy[self] = if Settings then Settings else {}
 
 	return setmetatable(self, Proxy)
 end
@@ -348,6 +359,10 @@ type Proxy = {
     Set: (self: Proxy, Key: string, Value: any) -> any,
     Get: (self: Proxy, Key: string) -> any,
     Destroy: (self: Proxy) -> nil
+}
+
+type Settings = {
+    TrackChildren: boolean?,
 }
 
 return Proxy
