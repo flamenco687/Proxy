@@ -2,6 +2,11 @@
 
 ---
 
+### ⚠️ Warning! ⚠️
+This is a quick note on the fact that Proxy is no longer being mantained. It has shown to not be really useful. However, you may still use the source code at your will and with learning purposes.
+
+---
+
 Ever heard of [proxies](https://en.wikipedia.org/wiki/Proxy_server)? Well, this one is a little bit different. Proxy's purpose is not working as a layer of communication between two machines but instead, working as an intermediary between the Server/Client and a table.
 
 Ever tried to detect changes in a roblox vanilla table? Well, I tried and found out that it wasn't possible by default because there are no functions nor metamethods to do so. After a while searching I finally found out that the only way to detect direct changes and indexes of a table was by using a proxy table. 
