@@ -41,6 +41,6 @@ Proxy.Test = 50 -- Nothing prints out
 # Installation
 <div align="center">
 
-[![wally-badge|240x80, 75%](https://user-images.githubusercontent.com/36084202/222930045-a4716c2d-0ac4-4010-8bd7-c184b31bd539.svg)](https://wally.run/package/flamenco687/roblox-proxy) [![github-badge|240x80, 75%](https://user-images.githubusercontent.com/36084202/222930062-baf235c6-a1a2-455c-b59f-bb3ef31cf7e7.svg)](https://github.com/flamenco687/Proxy/releases/tag/v3.1.1)
+[![wally-badge|240x80, 75%](https://user-images.githubusercontent.com/36084202/222930045-a4716c2d-0ac4-4010-8bd7-c184b31bd539.svg)](https://wally.run/package/flamenco687/roblox-proxy) [![github-badge|240x80, 75%](https://user-images.githubusercontent.com/36084202/222930062-baf235c6-a1a2-455c-b59f-bb3ef31cf7e7.svg)](https://github.com/flamenco687/Proxy/releases/tag/v3.1.3)
 
 </div>
