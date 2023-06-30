@@ -2,7 +2,7 @@
 
 ---
 
-### ⚠️ Warning! ⚠️
+### ⚠️ WARNING! ⚠️
 This is a quick note on the fact that Proxy is no longer being mantained. It has shown to not be really useful. However, you may still use the source code at your will and with learning purposes.
 
 ---
@@ -13,7 +13,7 @@ Ever tried to detect changes in a roblox vanilla table? Well, I tried and found 
 
 This is done by detecting indexes or newindexes inside the main table and passing or returning the values from the proxy table so the main one always remains empty and always notices changes. 
 
-So that's it, one metatable, two metamethods and a normal table to detect changes in vanilla tables, but if you want some extra functionality here it is, Proxy. *We've got moonwave documentation, wohoo!*
+So that's it, one metatable, two metamethods and a normal table to detect changes in vanilla tables, but if you want some extra functionality here it is, Proxy.
 
 ```lua
 local ProxyClass = require(Source.Proxy)
@@ -38,20 +38,9 @@ Disconnect() -- The connection gets disconnected by just calling it, magic! Insp
 
 Proxy.Test = 50 -- Nothing prints out
 ```
-# Installing Proxy
-### Wally
-Proxy is avaible as a [wally package](https://wally.run/package/flamenco687/roblox-proxy)! Just go ahead and add it to your *wally.toml* as a dependency
-```toml
-[dependencies]
-Proxy = "flamenco687/roblox-proxy@3.1.2"
-```
-### Github releases
-[Download the latest release](https://github.com/flamenco687/Proxy/releases/tag/v3.1.1)
-### Roblox
-By the time being, Proxy still has no roblox model to get from the library but it'll soon be avaible.
-# Documentation
-All needed documentation was generated with [Moonwave](https://github.com/UpliftGames/moonwave) and is found here https://flamenco687.github.io/Proxy/.
-# Contributing
-Proxy was made for personal use and may not adequate for all use-cases, if you want to add your own point of view and ideas to proxy feel free to contribute by forking it, commiting changes and opening pull requests. 
+# Installation
+<div align="center">
 
-If you find issues don't even ask yourself and report it! Proxy is a really simple library so if I see any open issue I'll... I'll be surprised, for sure.
+[![wally-badge|240x80, 75%](https://user-images.githubusercontent.com/36084202/222930045-a4716c2d-0ac4-4010-8bd7-c184b31bd539.svg)](https://wally.run/package/flamenco687/roblox-proxy) [![github-badge|240x80, 75%](https://user-images.githubusercontent.com/36084202/222930062-baf235c6-a1a2-455c-b59f-bb3ef31cf7e7.svg)](https://github.com/flamenco687/Proxy/releases/tag/v3.1.1)
+
+</div>
